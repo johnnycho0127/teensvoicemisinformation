@@ -9,225 +9,250 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #121212; /* Dark Mode for Teens */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* Keeps bubbles inside the screen */
-            color: white;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+            background-color: #f4f4f4; /* Light grey background like Tumblr dashboard */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #333;
         }
 
-        /* --- Header --- */
+        /* --- Sticky Header --- */
         header {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
-            text-align: center;
-            z-index: 100;
-            border-bottom: 1px solid #333;
-        }
-        h1 { margin: 0; font-size: 1.2rem; letter-spacing: 1px; color: #a0a0a0; }
-        .subtitle { font-size: 0.9rem; color: #4CAF50; font-weight: bold; }
-
-        /* --- The Bubble Stream (Container) --- */
-        #bubble-container {
-            flex-grow: 1;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            /* Gradient to fade bubbles at top */
-            mask-image: linear-gradient(to bottom, transparent, black 10%, black 100%);
-            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 100%);
-        }
-
-        /* --- Individual Bubbles --- */
-        .bubble {
-            position: absolute;
-            bottom: -150px; /* Start below screen */
-            max-width: 60%;
+            position: sticky;
+            top: 0;
+            background: #fff;
             padding: 15px 20px;
-            border-radius: 20px;
-            font-size: 1rem;
-            line-height: 1.4;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            animation: floatUp linear forwards;
-            opacity: 0.9;
-        }
-
-        /* Role Styles (Based on Board Roles) */
-        .role-tag {
-            display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            opacity: 0.8;
-        }
-
-        /* Color coding the roles [cite: 16-20] */
-        .bubble.victim { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #000; }
-        .bubble.sharer { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #fff; }
-        .bubble.producer { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #000; }
-        .bubble.influencer { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); color: #000; }
-
-        /* --- Input Area (The "Phone Interface") --- */
-        #input-area {
-            background-color: #1e1e1e;
-            padding: 20px;
-            z-index: 100;
-            border-top: 1px solid #333;
+            border-bottom: 2px solid #000;
+            z-index: 1000;
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: -1px; }
+        .tagline { font-size: 0.9rem; color: #666; display: none; } /* Hidden on mobile */
+        @media(min-width: 600px) { .tagline { display: block; } }
+
+        /* --- The Masonry Grid (Tumblr Style) --- */
+        .masonry-wrapper {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* This creates the waterfall effect */
+            column-count: 3; 
+            column-gap: 20px; 
+        }
+
+        /* --- The Advice Card (Bubble Style) --- */
+        .card {
+            background: white;
+            border-radius: 15px; /* Bubble edges */
+            padding: 20px;
+            margin-bottom: 20px; /* Space between items vertically */
+            box-shadow: 3px 3px 0px rgba(0,0,0,1); /* Retro/Zine shadow */
+            border: 2px solid #000;
+            break-inside: avoid; /* Prevents card from being cut in half by columns */
+            display: inline-block; /* Fix for column layout rendering */
+            width: 100%;
+            box-sizing: border-box;
+            transition: transform 0.2s;
+        }
+
+        .card:hover { transform: translateY(-3px); }
+
+        /* Role Header inside Card */
+        .card-meta {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dotted #ccc;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Color coding roles [cite: 16-19] */
+        .role-victim { color: #2980b9; }
+        .role-producer { color: #c0392b; }
+        .role-sharer { color: #8e44ad; }
+        .role-influencer { color: #27ae60; }
+
+        /* The Message Text */
+        .card-body {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        /* Footer (Likes/Tags) */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .tags { font-style: italic; }
+        .action-btn { cursor: pointer; }
+        .action-btn:hover { color: red; }
+
+        /* --- Floating Action Button (FAB) for Input --- */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #000;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        select, input, button {
-            padding: 12px;
-            border-radius: 25px;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 2000;
             border: none;
-            outline: none;
-            font-size: 1rem;
         }
 
-        select { background: #333; color: white; cursor: pointer; flex: 1; max-width: 150px; }
-        input { flex: 2; background: #333; color: white; min-width: 200px; }
-        button { 
-            background: #4CAF50; 
-            color: white; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: transform 0.2s;
-            padding: 12px 25px;
+        /* --- Modal for Input (Hidden by default) --- */
+        #input-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
         }
-        button:hover { transform: scale(1.05); background: #45a049; }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            border: 3px solid #000;
+            box-shadow: 10px 10px 0 #fff;
+        }
+        textarea { width: 100%; height: 100px; padding: 10px; margin: 10px 0; border: 2px solid #ddd; border-radius: 10px; font-family: inherit; }
+        select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 10px; }
+        .btn-submit { background: #000; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .btn-close { float: right; cursor: pointer; font-weight: bold; font-size: 1.2rem; }
 
-        /* --- Animation --- */
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.9); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(-110vh) scale(1); opacity: 0; }
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .bubble { max-width: 80%; font-size: 0.9rem; }
-            #input-area { padding: 10px; }
-            select, input { width: 100%; max-width: none; margin-bottom: 5px; }
-            button { width: 100%; }
-        }
+        /* Mobile Responsive */
+        @media (max-width: 800px) { .masonry-wrapper { column-count: 2; } }
+        @media (max-width: 500px) { .masonry-wrapper { column-count: 1; } }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>DEBRIEFING BOARD: STEP 3</h1>
-        <div class="subtitle">Community Action: Advice for the Future</div>
+        <div class="logo">DEBRIEF_BOARD</div>
+        <div class="tagline">Step 3: Community Action Advice</div>
     </header>
 
-    <div id="bubble-container"></div>
+    <div class="masonry-wrapper" id="grid">
+        <div class="card">
+            <div class="card-meta role-victim">● Former Victim</div>
+            <div class="card-body">"I felt totally overwhelmed when the comments started piling up. My advice? Turn off notifications immediately. You don't have to read the hate."</div>
+            <div class="card-footer">
+                <span class="tags">#overwhelmed #helpless</span>
+                <span class="action-btn">♥ 24</span>
+            </div>
+        </div>
 
-    <div id="input-area">
-        <select id="roleSelect">
-            <option value="" disabled selected>Select your past role...</option>
-            <option value="victim">I was a Victim</option>
-            <option value="sharer">I was a Sharer</option>
-            <option value="influencer">I was an Influencer</option>
-            <option value="producer">I was a Producer</option>
-        </select>
-        <input type="text" id="messageInput" placeholder="One piece of advice for the younger generation..." maxlength="140">
-        <button onclick="postBubble()">SEND ADVICE</button>
+        <div class="card">
+            <div class="card-meta role-sharer">● Former Sharer</div>
+            <div class="card-body">"I shared that rumor because of Loyalty to my group. I didn't check if it was true. Don't let loyalty blind you to the facts."</div>
+            <div class="card-footer">
+                <span class="tags">#loyalty #regret</span>
+                <span class="action-btn">♥ 12</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-meta role-influencer">● Former Influencer</div>
+            <div class="card-body">"Honestly? I did it for Popularity. I wanted the attention. But looking back, using fake news to get famous is just embarrassing."</div>
+            <div class="card-footer">
+                <span class="tags">#popularity #embarrassed</span>
+                <span class="action-btn">♥ 56</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-meta role-producer">● Former Producer</div>
+            <div class="card-body">"It was just for Fun at first. A joke. But people took it seriously. Advice: Satire on the internet is dangerous if you don't label it."</div>
+            <div class="card-footer">
+                <span class="tags">#fun #confused</span>
+                <span class="action-btn">♥ 8</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-meta role-victim">● Former Victim</div>
+            <div class="card-body">"Don't reply. They want a reaction. Silence is your best shield."</div>
+            <div class="card-footer">
+                <span class="tags">#scared #protection</span>
+                <span class="action-btn">♥ 102</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="fab" onclick="openModal()">+</button>
+
+    <div id="input-modal">
+        <div class="modal-content">
+            <span class="btn-close" onclick="closeModal()">×</span>
+            <h3>Leave Your Advice</h3>
+            <p style="font-size:0.9rem; color:#666;">Step 3: What would you tell the younger generation? [cite: 61]</p>
+            
+            <select id="roleSelect">
+                <option value="role-victim">I was a Victim</option>
+                <option value="role-sharer">I was a Sharer</option>
+                <option value="role-influencer">I was an Influencer</option>
+                <option value="role-producer">I was a Producer</option>
+            </select>
+            
+            <textarea id="msgInput" placeholder="Type your message here..."></textarea>
+            
+            <button class="btn-submit" onclick="addPost()">POST TO BOARD</button>
+        </div>
     </div>
 
     <script>
-        const container = document.getElementById('bubble-container');
-        
-        // --- 1. Pre-Populated Advice (Simulating Community) ---
-        // Based on the emotions/values tokens on your board [cite: 12, 26, 35, 36, 53]
-        const starterData = [
-            { role: 'victim', text: "It felt helpless when they ganged up. Advice: Don't engage with trolls, just block.", speed: 15 },
-            { role: 'sharer', text: "I shared it for Loyalty to my friend. I was wrong. Verify before you defend.", speed: 18 },
-            { role: 'influencer', text: "I wanted Popularity. But likes aren't worth hurting real people.", speed: 20 },
-            { role: 'producer', text: "It started as a joke for Fun. It got out of hand. Think before you post.", speed: 22 },
-            { role: 'victim', text: "I was scared to speak up. Find a trusted adult if you feel overwhelmed.", speed: 14 }
-        ];
+        const modal = document.getElementById('input-modal');
+        const grid = document.getElementById('grid');
 
-        // Function to create a bubble
-        function createBubble(text, role, speed) {
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble', role);
-            
-            // Random horizontal position (10% to 80% of screen width)
-            const randomLeft = Math.floor(Math.random() * 70) + 10;
-            bubble.style.left = randomLeft + '%';
-            
-            // Set the animation speed (slower = more contemplative)
-            bubble.style.animationDuration = speed + 's';
+        function openModal() { modal.style.display = 'flex'; }
+        function closeModal() { modal.style.display = 'none'; }
 
-            // HTML Structure of the bubble
-            bubble.innerHTML = `
-                <span class="role-tag">FROM A FORMER ${role.toUpperCase()}</span>
-                "${text}"
+        function addPost() {
+            const text = document.getElementById('msgInput').value;
+            const roleClass = document.getElementById('roleSelect').value;
+            const roleName = document.getElementById('roleSelect').options[document.getElementById('roleSelect').selectedIndex].text;
+
+            if(text.trim() === "") return;
+
+            // Create new Card HTML
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.innerHTML = `
+                <div class="card-meta ${roleClass}">● ${roleName}</div>
+                <div class="card-body">"${text}"</div>
+                <div class="card-footer">
+                    <span class="tags">#justnow</span>
+                    <span class="action-btn">♥ 0</span>
+                </div>
             `;
 
-            container.appendChild(bubble);
+            // Insert at the top of the grid (After the header? No, prepend to grid)
+            grid.insertBefore(newCard, grid.firstChild);
 
-            // Remove bubble from DOM after animation ends to prevent lag
-            setTimeout(() => {
-                bubble.remove();
-            }, speed * 1000);
+            // Close and Clear
+            document.getElementById('msgInput').value = "";
+            closeModal();
         }
-
-        // Initialize with starter bubbles
-        let delay = 0;
-        starterData.forEach(data => {
-            setTimeout(() => {
-                createBubble(data.text, data.role, data.speed);
-            }, delay);
-            delay += 2000; // Stagger them appearing
-        });
-
-        // Loop background bubbles forever
-        setInterval(() => {
-            const randomData = starterData[Math.floor(Math.random() * starterData.length)];
-            createBubble(randomData.text, randomData.role, Math.floor(Math.random() * 10) + 15);
-        }, 3000);
-
-
-        // --- 2. User Agency Action (Posting) ---
-        function postBubble() {
-            const input = document.getElementById('messageInput');
-            const roleSelect = document.getElementById('roleSelect');
-            
-            const text = input.value;
-            const role = roleSelect.value;
-
-            if (text.trim() === "" || role === "") {
-                alert("Please select a role and write your advice!");
-                return;
-            }
-
-            // Create the user's bubble immediately
-            // We give it a slightly faster speed (12s) so they see it rise
-            createBubble(text, role, 12);
-
-            // Clear inputs
-            input.value = "";
-            
-            // Optional: Scroll to bottom or visual feedback
-            input.placeholder = "Message sent to the future!";
-            setTimeout(() => input.placeholder = "One piece of advice for the younger generation...", 3000);
-        }
-
-        // Allow pressing "Enter" to send
-        document.getElementById('messageInput').addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                postBubble();
-            }
-        });
-
     </script>
 </body>
 </html>
