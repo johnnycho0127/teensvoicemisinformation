@@ -3,322 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TruthLoop: Community Action</title>
+    <title>TRUTH LOOP: THE ARCHIVE</title>
     <style>
-        /* --- General Styling --- */
+        /* --- 1. CAMPAIGN AESTHETICS (CSS) --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #ffffff;
+            --accent-yellow: #ccff00; /* Cyber Yellow */
+            --accent-purple: #b14AED;
+            --accent-red: #ff2a2a;
+            --text-main: #000000;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: #333;
-            /* Dotted Grid Background */
-            background-color: #f4f7f6;
-            background-image: radial-gradient(#bdc3c7 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Courier New', Courier, monospace; /* Tech/Hacker vibe */
+            overflow-x: hidden;
+            
+            /* darker background pattern */
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        /* --- Sticky Header --- */
+        /* --- 2. HEADER: GLITCH STYLE --- */
         header {
-            background: #2c3e50;
-            padding: 20px;
-            color: white;
+            padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-bottom: 4px solid var(--accent-yellow);
+            background: #111;
+            position: relative;
         }
-        
-        .logo { 
-            font-weight: 900; 
-            font-size: 1.8rem; 
-            letter-spacing: 2px;
+
+        h1 {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 3rem;
             text-transform: uppercase;
-        }
-        .subtitle {
-            font-size: 0.9rem;
-            color: #bdc3c7;
-            margin-top: 5px;
-            font-weight: normal;
-        }
-
-        /* --- Main Layout --- */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-
-        /* --- SECTION 1: THE INPUT BOX (Always Visible) --- */
-        .input-panel {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #2c3e50;
-            box-shadow: 8px 8px 0 rgba(44, 62, 80, 0.2);
-            margin-bottom: 50px; /* Space between input and list */
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .input-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            border-bottom: 2px dashed #ddd;
-            padding-bottom: 10px;
-        }
-
-        /* Form Inputs */
-        .form-row { display: flex; gap: 15px; }
-        
-        input, textarea {
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-family: inherit;
-            background: #fafafa;
-            font-size: 1rem;
-        }
-        input:focus, textarea:focus { outline: none; border-color: #3498db; background: white; }
-
-        input#nameInput { flex: 1; } /* Name takes 1 part */
-        input#tagInput { flex: 1; }  /* Tag takes 1 part */
-        textarea { width: 100%; height: 100px; resize: vertical; box-sizing: border-box; }
-
-        .btn-submit {
-            background: #2c3e50;
+            margin: 0;
             color: white;
-            border: none;
-            padding: 15px;
-            font-size: 1rem;
+            letter-spacing: -2px;
+            text-shadow: 3px 3px 0px var(--accent-purple);
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: black;
+            padding: 5px 15px;
             font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.1s, background 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1.2rem;
+            transform: rotate(-2deg); /* Tilted sticker look */
         }
-        .btn-submit:hover { background: #34495e; transform: translateY(-2px); }
-        .btn-submit:active { transform: translateY(1px); }
 
-        /* --- SECTION 2: THE COMMUNITY FEED --- */
+        /* --- 3. THE WALL (Masonry Grid) --- */
         .masonry-wrapper {
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
             column-count: 3; 
-            column-gap: 25px; 
+            column-gap: 30px; 
         }
 
-        /* --- The Story Card --- */
+        /* --- 4. CARD DESIGN (Stickers & Brutalism) --- */
         .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px; 
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
-            border: 1px solid #ddd;
+            background: var(--card-bg);
+            color: var(--text-main);
+            border-radius: 0px; /* Sharp edges */
+            padding: 25px;
+            margin-bottom: 30px; 
+            border: 3px solid black;
+            box-shadow: 8px 8px 0px var(--accent-purple); /* Hard shadow */
             break-inside: avoid; 
             display: inline-block; 
             width: 100%;
+            position: relative;
             transition: transform 0.2s;
-            box-sizing: border-box; /* Fixes padding issues */
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* Readable body text */
         }
 
-        .card:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px rgba(0,0,0,0.15); border-color: #bbb;}
+        .card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 12px 12px 0px var(--accent-yellow);
+        }
 
-        /* Name Header */
-        .card-header {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #7f8c8d;
-            margin-bottom: 10px;
+        /* Pin/Tape Decoration on top of cards */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Role Badge (e.g. VICTIM, PRODUCER) */
+        .role-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 900;
             text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            border: 2px solid black;
+            padding: 4px 8px;
+            margin-bottom: 15px;
+            background: white;
+            letter-spacing: 1px;
         }
-        .user-icon { background: #ecf0f1; width: 20px; height: 20px; border-radius: 50%; display:inline-block; }
 
-        /* The Story Text */
+        /* Color coding the badges based on your tokens */
+        .role-victim { background: #ffcccc; color: red; }
+        .role-producer { background: #000; color: var(--accent-yellow); }
+        .role-sharer { background: #e0e0e0; color: black; }
+        .role-influencer { background: #ccff00; color: black; }
+
         .card-body {
-            font-size: 1.05rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            color: #2c3e50;
-            font-weight: 500;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            font-weight: 600;
         }
 
-        /* Hashtags */
         .card-tags {
+            margin-top: 15px;
             font-size: 0.85rem;
-            color: #3498db;
-            margin-bottom: 15px;
+            color: #666;
+            font-family: 'Courier New', monospace;
             font-weight: bold;
         }
 
         /* Interactive Footer */
         .card-footer {
-            border-top: 1px solid #f4f4f4;
-            padding-top: 12px;
+            margin-top: 20px;
+            border-top: 2px dashed #000;
+            padding-top: 10px;
             display: flex;
-            justify-content: flex-end;
-        }
-
-        .like-btn {
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #bdc3c7;
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
-        }
-        .like-btn:hover { color: #e74c3c; }
-        .like-btn.liked { color: #e74c3c; animation: pump 0.4s ease; }
-        .like-count { font-size: 0.9rem; font-weight: bold; color: #7f8c8d; }
-
-        @keyframes pump {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.4); }
-            100% { transform: scale(1); }
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 800px) { 
-            .masonry-wrapper { column-count: 2; } 
-            .form-row { flex-direction: column; gap: 10px; }
+        .heart-btn {
+            cursor: pointer;
+            font-size: 1.5rem;
+            user-select: none;
+            transition: transform 0.2s;
         }
+        .heart-btn:hover { transform: scale(1.2); }
+        .heart-count { font-size: 1rem; font-weight: bold; font-family: 'Courier New'; }
+
+        /* --- 5. DECORATIONS --- */
+        .warning-tape {
+            background: var(--accent-yellow);
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px;
+            font-family: monospace;
+            border-bottom: 2px solid black;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) { .masonry-wrapper { column-count: 2; } }
         @media (max-width: 500px) { .masonry-wrapper { column-count: 1; } }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">TruthLoop</div>
-        <div class="subtitle">Step 3: Community Action Board</div>
-    </header>
-
-    <div class="container">
-        
-        <div class="input-panel">
-            <div class="input-title">Add Your Advice</div>
-            <p style="margin:0 0 10px 0; color:#666; font-size:0.9rem;">
-                Based on your experience with the game, what advice would you give to the younger generation?
-            </p>
-            
-            <div class="form-row">
-                <input type="text" id="nameInput" placeholder="Your Nickname" maxlength="20">
-                <input type="text" id="tagInput" placeholder="#Values (e.g. #Loyalty)">
-            </div>
-            
-            <textarea id="msgInput" placeholder="Write your story or advice here..."></textarea>
-            
-            <button class="btn-submit" onclick="addPost()">Post Advice</button>
-        </div>
-
-        <div class="masonry-wrapper" id="grid">
-            
-            <div class="card">
-                <div class="card-header"><span class="user-icon"></span> TruthSeeker_01</div>
-                <div class="card-body">"I realized I was sharing posts just to protect my friends. But loyalty doesn't mean spreading lies. Now I double-check everything."</div>
-                <div class="card-tags">#Loyalty #ProtectingFriends</div>
-                <div class="card-footer">
-                    <div class="like-btn" onclick="toggleLike(this)">♥ <span class="like-count">12</span></div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header"><span class="user-icon"></span> Gamer_X</div>
-                <div class="card-body">"I did it for the popularity. It was fun until I saw how much it hurt the victim. My advice: Likes aren't worth the guilt."</div>
-                <div class="card-tags">#Popularity #Regretful</div>
-                <div class="card-footer">
-                    <div class="like-btn" onclick="toggleLike(this)">♥ <span class="like-count">45</span></div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header"><span class="user-icon"></span> AlexM</div>
-                <div class="card-body">"When I see something that makes me super angry, I stop. That's usually a sign I'm being manipulated."</div>
-                <div class="card-tags">#EmotionControl #Advice</div>
-                <div class="card-footer">
-                    <div class="like-btn" onclick="toggleLike(this)">♥ <span class="like-count">89</span></div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header"><span class="user-icon"></span> Sarah_123</div>
-                <div class="card-body">"Don't be afraid to be the one who breaks the chain. You don't have to share everything you see."</div>
-                <div class="card-tags">#Agency #Action</div>
-                <div class="card-footer">
-                    <div class="like-btn" onclick="toggleLike(this)">♥ <span class="like-count">33</span></div>
-                </div>
-            </div>
-
-             <div class="card">
-                <div class="card-header"><span class="user-icon"></span> Anon_Eagle</div>
-                <div class="card-body">"I felt embarrassed that I fell for a fake story. But now I know how to use fact-checking tools."</div>
-                <div class="card-tags">#Embarrassed #Growth</div>
-                <div class="card-footer">
-                    <div class="like-btn" onclick="toggleLike(this)">♥ <span class="like-count">10</span></div>
-                </div>
-            </div>
-
-        </div>
+    <div class="warning-tape">
+        /// SYSTEM MESSAGE: AGENCY RESTORED /// BREAK THE CYCLE ///
     </div>
 
+    <header>
+        <h1>TRUTH LOOP</h1>
+        <div class="subtitle">ADVICE FOR THE FUTURE</div>
+    </header>
+
+    <div class="masonry-wrapper">
+
+        <div class="card" style="transform: rotate(-1deg);">
+            <div class="role-badge role-victim">FORMER VICTIM</div>
+            <div class="card-body">
+                "It felt overwhelming when everyone attacked. I wish I knew sooner that I could just log off. You don't owe the internet a reaction."
+            </div>
+            <div class="card-tags">#Overwhelmed #SelfCare</div>
+            <div class="card-footer">
+                <span>By: Sarah_J</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">84</span></span>
+            </div>
+        </div>
+
+        <div class="card" style="transform: rotate(2deg);">
+            <div class="role-badge role-producer">FORMER PRODUCER</div>
+            <div class="card-body">
+                "I started the rumor for Fun and Curiosity. I didn't think about the real person behind the screen. It's not a game."
+            </div>
+            <div class="card-tags">#Regret #Empathy</div>
+            <div class="card-footer">
+                <span>By: Anon_09</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">112</span></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="role-badge role-sharer">FORMER SHARER</div>
+            <div class="card-body">
+                "I shared it because I wanted to Protect My Friends. But I was actually spreading lies. Loyalty means checking the facts first."
+            </div>
+            <div class="card-tags">#Loyalty #FactCheck</div>
+            <div class="card-footer">
+                <span>By: Truth_Seeker</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">45</span></span>
+            </div>
+        </div>
+
+        <div class="card" style="transform: rotate(-2deg);">
+            <div class="role-badge role-influencer">FORMER INFLUENCER</div>
+            <div class="card-body">
+                "Chasing Popularity made me lose myself. Don't post things just for likes. Your integrity is worth more."
+            </div>
+            <div class="card-tags">#Popularity #Integrity</div>
+            <div class="card-footer">
+                <span>By: Star_Gazer</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">203</span></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="role-badge role-victim">FORMER VICTIM</div>
+            <div class="card-body">
+                "I was Scared and Angry. But fighting back in the comments only made it worse. Report, Block, Move on."
+            </div>
+            <div class="card-tags">#Scared #Action</div>
+            <div class="card-footer">
+                <span>By: BlueSky</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">67</span></span>
+            </div>
+        </div>
+
+        <div class="card" style="transform: rotate(1deg);">
+            <div class="role-badge" style="background:black; color:white;">COMMUNITY ACTION</div>
+            <div class="card-body">
+                "My one piece of advice? If the headline makes you super emotional instantly... it's probably trying to manipulate you."
+            </div>
+            <div class="card-tags">#MediaLiteracy #Pause</div>
+            <div class="card-footer">
+                <span>By: The_Mod</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">350</span></span>
+            </div>
+        </div>
+
+        </div>
+
     <script>
-        // --- 1. POST FUNCTION ---
-        function addPost() {
-            // Get values
-            const name = document.getElementById('nameInput').value;
-            const text = document.getElementById('msgInput').value;
-            const tags = document.getElementById('tagInput').value;
-            const grid = document.getElementById('grid');
-
-            // Validation
-            if(text.trim() === "" || name.trim() === "") {
-                alert("Please write your name and a message!");
-                return;
-            }
-
-            // Format Hashtags
-            let formattedTags = tags.split(' ')
-                .map(tag => tag.length > 0 && !tag.startsWith('#') ? '#' + tag : tag)
-                .join(' ');
-
-            // Create HTML for new card
-            const newCard = document.createElement('div');
-            newCard.className = 'card';
-            newCard.innerHTML = `
-                <div class="card-header"><span class="user-icon"></span> ${name}</div>
-                <div class="card-body">"${text}"</div>
-                <div class="card-tags">${formattedTags}</div>
-                <div class="card-footer">
-                    <div class="like-btn" onclick="toggleLike(this)">♥ <span class="like-count">0</span></div>
-                </div>
-            `;
-
-            // Insert at the VERY TOP of the grid
-            grid.insertBefore(newCard, grid.firstChild);
-
-            // Clear the inputs (Reset for next user)
-            document.getElementById('nameInput').value = "";
-            document.getElementById('msgInput').value = "";
-            document.getElementById('tagInput').value = "";
-        }
-
-        // --- 2. LIKE FUNCTION ---
-        function toggleLike(btn) {
-            let countSpan = btn.querySelector('.like-count');
-            let currentCount = parseInt(countSpan.innerText);
+        // Simple interactive script for the hearts
+        function like(element) {
+            let countSpan = element.querySelector('.heart-count');
+            let count = parseInt(countSpan.innerText);
             
-            if (btn.classList.contains('liked')) {
-                // If already liked, unlike it
-                countSpan.innerText = currentCount - 1;
-                btn.classList.remove('liked');
+            if (element.classList.contains('liked')) {
+                // Unlike functionality (optional)
+                /* countSpan.innerText = count - 1;
+                element.classList.remove('liked');
+                element.innerHTML = '🖤 <span class="heart-count">' + (count - 1) + '</span>'; */
             } else {
-                // Like it
-                countSpan.innerText = currentCount + 1;
-                btn.classList.add('liked');
+                // Like functionality
+                countSpan.innerText = count + 1;
+                element.classList.add('liked');
+                // Change heart color
+                element.innerHTML = '❤️ <span class="heart-count">' + (count + 1) + '</span>';
             }
         }
     </script>
