@@ -3,173 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRUTH LOOP: THE ARCHIVE</title>
+    <title>TRUTH LOOP: LIVE CAMPAIGN</title>
     <style>
-        /* --- 1. CAMPAIGN AESTHETICS (CSS) --- */
+        /* --- 1. CAMPAIGN AESTHETICS --- */
         :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #ffffff;
-            --accent-yellow: #ccff00; /* Cyber Yellow */
+            --bg-color: #050505;
+            --card-bg: #1a1a1a;
+            --accent-yellow: #ccff00;
             --accent-purple: #b14AED;
-            --accent-red: #ff2a2a;
-            --text-main: #000000;
+            --text-main: #ffffff;
         }
 
         body {
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
-            color: white;
-            font-family: 'Courier New', Courier, monospace; /* Tech/Hacker vibe */
-            overflow-x: hidden;
-            
-            /* darker background pattern */
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* --- 2. HEADER: GLITCH STYLE --- */
+        /* --- HEADER --- */
         header {
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
-            border-bottom: 4px solid var(--accent-yellow);
-            background: #111;
-            position: relative;
+            border-bottom: 3px solid var(--accent-yellow);
+            background: #000;
         }
 
         h1 {
             font-family: 'Arial Black', sans-serif;
-            font-size: 3rem;
-            text-transform: uppercase;
+            font-size: 2.5rem;
             margin: 0;
-            color: white;
             letter-spacing: -2px;
-            text-shadow: 3px 3px 0px var(--accent-purple);
+            text-shadow: 4px 4px 0px var(--accent-purple);
         }
 
         .subtitle {
-            margin-top: 10px;
-            display: inline-block;
             background: var(--accent-yellow);
             color: black;
             padding: 5px 15px;
             font-weight: bold;
-            font-size: 1.2rem;
-            transform: rotate(-2deg); /* Tilted sticker look */
+            display: inline-block;
+            transform: rotate(-2deg);
+            margin-top: 10px;
         }
 
-        /* --- 3. THE WALL (Masonry Grid) --- */
+        /* --- THE WALL --- */
         .masonry-wrapper {
             padding: 40px 20px;
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             column-count: 3; 
             column-gap: 30px; 
         }
 
-        /* --- 4. CARD DESIGN (Stickers & Brutalism) --- */
+        /* --- CARD DESIGN --- */
         .card {
             background: var(--card-bg);
-            color: var(--text-main);
-            border-radius: 0px; /* Sharp edges */
-            padding: 25px;
+            border: 2px solid #333;
+            padding: 20px;
             margin-bottom: 30px; 
-            border: 3px solid black;
-            box-shadow: 8px 8px 0px var(--accent-purple); /* Hard shadow */
+            box-shadow: 8px 8px 0px var(--accent-purple);
             break-inside: avoid; 
             display: inline-block; 
             width: 100%;
-            position: relative;
             transition: transform 0.2s;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif; /* Readable body text */
+            position: relative;
         }
 
         .card:hover {
             transform: translate(-3px, -3px);
             box-shadow: 12px 12px 0px var(--accent-yellow);
+            border-color: var(--accent-yellow);
         }
 
-        /* Pin/Tape Decoration on top of cards */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border: 2px solid #ccc;
-            z-index: 10;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        /* Role Badge (e.g. VICTIM, PRODUCER) */
+        /* Role Badges */
         .role-badge {
-            display: inline-block;
             font-size: 0.7rem;
             font-weight: 900;
             text-transform: uppercase;
-            border: 2px solid black;
             padding: 4px 8px;
             margin-bottom: 15px;
-            background: white;
-            letter-spacing: 1px;
+            display: inline-block;
+            border: 1px solid white;
         }
-
-        /* Color coding the badges based on your tokens */
-        .role-victim { background: #ffcccc; color: red; }
-        .role-producer { background: #000; color: var(--accent-yellow); }
-        .role-sharer { background: #e0e0e0; color: black; }
-        .role-influencer { background: #ccff00; color: black; }
+        .role-victim { color: #ff4d4d; border-color: #ff4d4d; }
+        .role-producer { background: var(--accent-yellow); color: black; border:none; }
+        .role-sharer { color: #ccc; border-color: #ccc; }
+        .role-influencer { color: #00ffff; border-color: #00ffff; }
 
         .card-body {
-            font-size: 1.1rem;
-            line-height: 1.4;
-            font-weight: 600;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
         }
 
-        .card-tags {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: #666;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-        }
-
-        /* Interactive Footer */
+        /* --- LIVE VOTING FOOTER --- */
         .card-footer {
-            margin-top: 20px;
-            border-top: 2px dashed #000;
+            border-top: 1px dashed #444;
             padding-top: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+        .author { font-size: 0.8rem; color: #888; }
+
         .heart-btn {
             cursor: pointer;
-            font-size: 1.5rem;
-            user-select: none;
-            transition: transform 0.2s;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #222;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid #444;
+            transition: all 0.2s;
         }
-        .heart-btn:hover { transform: scale(1.2); }
-        .heart-count { font-size: 1rem; font-weight: bold; font-family: 'Courier New'; }
 
-        /* --- 5. DECORATIONS --- */
-        .warning-tape {
-            background: var(--accent-yellow);
-            color: black;
-            font-weight: bold;
-            text-align: center;
-            padding: 5px;
-            font-family: monospace;
-            border-bottom: 2px solid black;
+        .heart-btn:hover { background: #333; border-color: white; }
+        
+        .heart-btn.voted { 
+            border-color: #ff2a2a; 
+            color: #ff2a2a;
+            background: rgba(255, 42, 42, 0.1);
         }
+        
+        /* Loading spinner */
+        .loading { opacity: 0.5; pointer-events: none; }
 
         /* Responsive */
         @media (max-width: 800px) { .masonry-wrapper { column-count: 2; } }
@@ -178,109 +146,136 @@
 </head>
 <body>
 
-    <div class="warning-tape">
-        /// SYSTEM MESSAGE: AGENCY RESTORED /// BREAK THE CYCLE ///
-    </div>
-
     <header>
         <h1>TRUTH LOOP</h1>
-        <div class="subtitle">ADVICE FOR THE FUTURE</div>
+        <div class="subtitle">LIVE COMMUNITY FEED</div>
     </header>
 
     <div class="masonry-wrapper">
 
-        <div class="card" style="transform: rotate(-1deg);">
+        <div class="card">
             <div class="role-badge role-victim">FORMER VICTIM</div>
-            <div class="card-body">
-                "It felt overwhelming when everyone attacked. I wish I knew sooner that I could just log off. You don't owe the internet a reaction."
-            </div>
-            <div class="card-tags">#Overwhelmed #SelfCare</div>
+            <div class="card-body">"I wish I knew sooner that I could just log off. You don't owe the internet a reaction."</div>
             <div class="card-footer">
-                <span>By: Sarah_J</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">84</span></span>
+                <span class="author">By: Sarah_J</span>
+                <div class="heart-btn" id="card_victim_01" onclick="vote('card_victim_01')">
+                    🖤 <span class="count">...</span>
+                </div>
             </div>
         </div>
 
-        <div class="card" style="transform: rotate(2deg);">
+        <div class="card">
             <div class="role-badge role-producer">FORMER PRODUCER</div>
-            <div class="card-body">
-                "I started the rumor for Fun and Curiosity. I didn't think about the real person behind the screen. It's not a game."
-            </div>
-            <div class="card-tags">#Regret #Empathy</div>
+            <div class="card-body">"I started the rumor for Fun. I didn't think about the real person behind the screen. It's not a game."</div>
             <div class="card-footer">
-                <span>By: Anon_09</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">112</span></span>
+                <span class="author">By: Anon_09</span>
+                <div class="heart-btn" id="card_producer_01" onclick="vote('card_producer_01')">
+                    🖤 <span class="count">...</span>
+                </div>
             </div>
         </div>
 
         <div class="card">
             <div class="role-badge role-sharer">FORMER SHARER</div>
-            <div class="card-body">
-                "I shared it because I wanted to Protect My Friends. But I was actually spreading lies. Loyalty means checking the facts first."
-            </div>
-            <div class="card-tags">#Loyalty #FactCheck</div>
+            <div class="card-body">"Loyalty means checking the facts first. Don't let your friends use you to spread lies."</div>
             <div class="card-footer">
-                <span>By: Truth_Seeker</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">45</span></span>
+                <span class="author">By: Truth_Seeker</span>
+                <div class="heart-btn" id="card_sharer_01" onclick="vote('card_sharer_01')">
+                    🖤 <span class="count">...</span>
+                </div>
             </div>
         </div>
 
-        <div class="card" style="transform: rotate(-2deg);">
+        <div class="card">
             <div class="role-badge role-influencer">FORMER INFLUENCER</div>
-            <div class="card-body">
-                "Chasing Popularity made me lose myself. Don't post things just for likes. Your integrity is worth more."
-            </div>
-            <div class="card-tags">#Popularity #Integrity</div>
+            <div class="card-body">"Chasing popularity made me lose myself. Your integrity is worth more than likes."</div>
             <div class="card-footer">
-                <span>By: Star_Gazer</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">203</span></span>
+                <span class="author">By: Star_Gazer</span>
+                <div class="heart-btn" id="card_inf_01" onclick="vote('card_inf_01')">
+                    🖤 <span class="count">...</span>
+                </div>
             </div>
         </div>
 
         <div class="card">
             <div class="role-badge role-victim">FORMER VICTIM</div>
-            <div class="card-body">
-                "I was Scared and Angry. But fighting back in the comments only made it worse. Report, Block, Move on."
-            </div>
-            <div class="card-tags">#Scared #Action</div>
+            <div class="card-body">"Fighting back in the comments only made it worse. Report, Block, Move on."</div>
             <div class="card-footer">
-                <span>By: BlueSky</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">67</span></span>
+                <span class="author">By: BlueSky</span>
+                <div class="heart-btn" id="card_victim_02" onclick="vote('card_victim_02')">
+                    🖤 <span class="count">...</span>
+                </div>
             </div>
         </div>
 
-        <div class="card" style="transform: rotate(1deg);">
-            <div class="role-badge" style="background:black; color:white;">COMMUNITY ACTION</div>
-            <div class="card-body">
-                "My one piece of advice? If the headline makes you super emotional instantly... it's probably trying to manipulate you."
-            </div>
-            <div class="card-tags">#MediaLiteracy #Pause</div>
+        <div class="card" style="border-color: white;">
+            <div class="role-badge" style="background:white; color:black;">ADVICE</div>
+            <div class="card-body">"If a headline makes you super angry instantly... it's probably trying to manipulate you."</div>
             <div class="card-footer">
-                <span>By: The_Mod</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">350</span></span>
+                <span class="author">By: The_Mod</span>
+                <div class="heart-btn" id="card_gen_01" onclick="vote('card_gen_01')">
+                    🖤 <span class="count">...</span>
+                </div>
             </div>
         </div>
 
-        </div>
+    </div>
 
     <script>
-        // Simple interactive script for the hearts
-        function like(element) {
-            let countSpan = element.querySelector('.heart-count');
-            let count = parseInt(countSpan.innerText);
+        // --- 1. CONFIGURATION ---
+        // CHANGE THIS to something unique so you don't share votes with others!
+        const NAMESPACE = 'truthloop_dissertation_demo_v1'; 
+        const API_URL = 'https://api.countapi.xyz';
+
+        // --- 2. LOAD VOTES ON START ---
+        // This runs automatically when the page opens
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.heart-btn');
             
-            if (element.classList.contains('liked')) {
-                // Unlike functionality (optional)
-                /* countSpan.innerText = count - 1;
-                element.classList.remove('liked');
-                element.innerHTML = '🖤 <span class="heart-count">' + (count - 1) + '</span>'; */
-            } else {
-                // Like functionality
-                countSpan.innerText = count + 1;
-                element.classList.add('liked');
-                // Change heart color
-                element.innerHTML = '❤️ <span class="heart-count">' + (count + 1) + '</span>';
-            }
+            buttons.forEach(btn => {
+                const key = btn.id; // The unique ID from HTML
+                
+                // Fetch current count from the cloud
+                fetch(`${API_URL}/get/${NAMESPACE}/${key}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // If data exists, show it. If not, assume 0.
+                        const val = data.value || 0;
+                        btn.querySelector('.count').innerText = val;
+                    })
+                    .catch(() => {
+                        // Fallback if API is down or new key
+                        btn.querySelector('.count').innerText = "0";
+                    });
+            });
+        });
+
+        // --- 3. VOTE FUNCTION (When Clicked) ---
+        function vote(key) {
+            const btn = document.getElementById(key);
+            
+            // Prevent double voting visually (optional)
+            if(btn.classList.contains('loading')) return;
+
+            // Add loading effect
+            btn.classList.add('loading');
+
+            // Send vote to Cloud
+            fetch(`${API_URL}/hit/${NAMESPACE}/${key}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update number
+                    btn.querySelector('.count').innerText = data.value;
+                    
+                    // Visual Success
+                    btn.classList.remove('loading');
+                    btn.classList.add('voted');
+                    btn.innerHTML = '❤️ <span class="count">' + data.value + '</span>';
+                })
+                .catch(err => {
+                    console.error("Voting failed", err);
+                    btn.classList.remove('loading');
+                });
         }
     </script>
 </body>
