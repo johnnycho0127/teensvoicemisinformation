@@ -3,309 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRUTH_RESISTANCE // Community Board</title>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
-    
+    <title>TRUTH LOOP: THE ARCHIVE</title>
     <style>
-        /* --- CAMPAIGN AESTHETICS (Dark/Neon/Glitch) --- */
+        /* --- 1. CAMPAIGN AESTHETICS (CSS) --- */
         :root {
             --bg-color: #0a0a0a;
-            --card-bg: #161616;
-            --text-main: #e0e0e0;
-            --neon-green: #00ff41;
-            --neon-pink: #ff0055;
-            --neon-blue: #00f3ff;
-            --border-thick: 2px solid #333;
+            --card-bg: #ffffff;
+            --accent-yellow: #ccff00; /* Cyber Yellow */
+            --accent-purple: #b14AED;
+            --accent-red: #ff2a2a;
+            --text-main: #000000;
         }
 
         body {
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Chakra Petch', sans-serif; /* Tech/Futuristic Font */
+            color: white;
+            font-family: 'Courier New', Courier, monospace; /* Tech/Hacker vibe */
+            overflow-x: hidden;
             
-            /* Background Pattern: Digital Noise / Scanlines */
+            /* darker background pattern */
             background-image: 
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 6px 100%;
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        /* --- HERO HEADER --- */
+        /* --- 2. HEADER: GLITCH STYLE --- */
         header {
-            text-align: center;
             padding: 40px 20px;
-            border-bottom: 4px solid var(--neon-green);
-            background: #000;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-yellow);
+            background: #111;
             position: relative;
-            overflow: hidden;
         }
 
         h1 {
-            font-family: 'Permanent Marker', cursive; /* "Graffiti" style */
-            font-size: 3.5rem;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 3rem;
+            text-transform: uppercase;
             margin: 0;
             color: white;
-            text-shadow: 4px 4px 0px var(--neon-pink);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            letter-spacing: -2px;
+            text-shadow: 3px 3px 0px var(--accent-purple);
         }
 
         .subtitle {
             margin-top: 10px;
-            font-size: 1.2rem;
-            color: var(--neon-green);
-            text-transform: uppercase;
-            letter-spacing: 4px;
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: black;
+            padding: 5px 15px;
             font-weight: bold;
+            font-size: 1.2rem;
+            transform: rotate(-2deg); /* Tilted sticker look */
         }
 
-        .mission-box {
-            max-width: 600px;
-            margin: 20px auto 0;
-            border: 1px dashed #555;
-            padding: 15px;
-            font-size: 0.9rem;
-            color: #888;
-        }
-
-        /* --- MASONRY GRID --- */
+        /* --- 3. THE WALL (Masonry Grid) --- */
         .masonry-wrapper {
             padding: 40px 20px;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            column-count: 3;
-            column-gap: 30px;
+            column-count: 3; 
+            column-gap: 30px; 
         }
 
-        /* --- CARD STYLING (The "Posters") --- */
+        /* --- 4. CARD DESIGN (Stickers & Brutalism) --- */
         .card {
             background: var(--card-bg);
-            border: 1px solid #333;
-            margin-bottom: 30px;
-            break-inside: avoid;
+            color: var(--text-main);
+            border-radius: 0px; /* Sharp edges */
+            padding: 25px;
+            margin-bottom: 30px; 
+            border: 3px solid black;
+            box-shadow: 8px 8px 0px var(--accent-purple); /* Hard shadow */
+            break-inside: avoid; 
+            display: inline-block; 
+            width: 100%;
             position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
-            
-            /* Brutalist Shadow */
-            box-shadow: 8px 8px 0px var(--neon-blue); 
+            transition: transform 0.2s;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* Readable body text */
         }
 
         .card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px var(--neon-pink);
-            z-index: 10;
+            transform: translate(-3px, -3px);
+            box-shadow: 12px 12px 0px var(--accent-yellow);
         }
 
-        /* Card Decoration: Tape Effect */
+        /* Pin/Tape Decoration on top of cards */
         .card::before {
             content: '';
             position: absolute;
-            top: -10px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 30%;
-            height: 20px;
-            background: rgba(255,255,255,0.2);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .card-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid #333;
+        /* Role Badge (e.g. VICTIM, PRODUCER) */
+        .role-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: 2px solid black;
+            padding: 4px 8px;
+            margin-bottom: 15px;
+            background: white;
+            letter-spacing: 1px;
+        }
+
+        /* Color coding the badges based on your tokens */
+        .role-victim { background: #ffcccc; color: red; }
+        .role-producer { background: #000; color: var(--accent-yellow); }
+        .role-sharer { background: #e0e0e0; color: black; }
+        .role-influencer { background: #ccff00; color: black; }
+
+        .card-body {
+            font-size: 1.1rem;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .card-tags {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #666;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        /* Interactive Footer */
+        .card-footer {
+            margin-top: 20px;
+            border-top: 2px dashed #000;
+            padding-top: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .role-badge {
-            font-size: 0.75rem;
+        .heart-btn {
+            cursor: pointer;
+            font-size: 1.5rem;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        .heart-btn:hover { transform: scale(1.2); }
+        .heart-count { font-size: 1rem; font-weight: bold; font-family: 'Courier New'; }
+
+        /* --- 5. DECORATIONS --- */
+        .warning-tape {
+            background: var(--accent-yellow);
+            color: black;
             font-weight: bold;
-            text-transform: uppercase;
-            padding: 4px 8px;
-            color: #000;
-        }
-
-        /* Role Colors based on tokens [cite: 17, 19, 38] */
-        .role-victim { background-color: var(--neon-blue); }
-        .role-producer { background-color: var(--neon-pink); }
-        .role-sharer { background-color: var(--neon-green); }
-        .role-influencer { background-color: #ffe600; }
-
-        .card-body {
-            padding: 20px;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .quote-mark {
-            font-size: 2rem;
-            color: #333;
-            line-height: 0;
-            vertical-align: middle;
-            margin-right: 5px;
-        }
-
-        .card-footer {
-            padding: 15px 20px;
-            background: #0f0f0f;
-            border-top: 1px solid #222;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .hashtag {
-            font-size: 0.8rem;
-            color: #888;
+            text-align: center;
+            padding: 5px;
             font-family: monospace;
-            border: 1px solid #333;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* --- DECORATIVE ELEMENTS --- */
-        .glitch-line {
-            height: 2px;
-            width: 100%;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--neon-green) 0%,
-                var(--neon-green) 5%,
-                transparent 5%,
-                transparent 10%
-            );
-            margin: 20px 0;
-            opacity: 0.5;
+            border-bottom: 2px solid black;
         }
 
         /* Responsive */
-        @media (max-width: 900px) { .masonry-wrapper { column-count: 2; } }
-        @media (max-width: 600px) { 
-            .masonry-wrapper { column-count: 1; } 
-            h1 { font-size: 2.5rem; }
-        }
+        @media (max-width: 800px) { .masonry-wrapper { column-count: 2; } }
+        @media (max-width: 500px) { .masonry-wrapper { column-count: 1; } }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>The Truth Loop</h1>
-        <div class="subtitle">Step 3: Break the Cycle</div>
-        
-        <div class="mission-box">
-            [ SYSTEM STATUS: ACTIVE ]<br>
-            BELOW IS ADVICE GENERATED FROM THE "DEBRIEFING" SESSIONS.<br>
-            WALK IN SOMEONE ELSE'S SHOES.
-        </div>
-    </header>
+    <div class="warning-tape">
+        /// SYSTEM MESSAGE: AGENCY RESTORED /// BREAK THE CYCLE ///
+    </div>
 
-    <div class="glitch-line"></div>
+    <header>
+        <h1>TRUTH LOOP</h1>
+        <div class="subtitle">ADVICE FOR THE FUTURE</div>
+    </header>
 
     <div class="masonry-wrapper">
 
-        <div class="card">
-            <div class="card-header">
-                <span class="role-badge role-sharer">FORMER SHARER</span>
-                <span style="font-size:1.2rem;">👁️</span>
-            </div>
+        <div class="card" style="transform: rotate(-1deg);">
+            <div class="role-badge role-victim">FORMER VICTIM</div>
             <div class="card-body">
-                <span class="quote-mark">“</span>
-                I shared the rumor because of <b>Loyalty</b>. I thought I was protecting my friends. I was wrong. Blind loyalty just creates more chaos. Verify before you defend.
+                "It felt overwhelming when everyone attacked. I wish I knew sooner that I could just log off. You don't owe the internet a reaction."
             </div>
+            <div class="card-tags">#Overwhelmed #SelfCare</div>
             <div class="card-footer">
-                <span class="hashtag">#Loyalty</span>
-                <span class="hashtag">#ProtectingFriends</span>
-                <span class="hashtag">#Regretful</span>
+                <span>By: Sarah_J</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">84</span></span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <span class="role-badge role-influencer">FORMER INFLUENCER</span>
-                <span style="font-size:1.2rem;">★</span>
-            </div>
+        <div class="card" style="transform: rotate(2deg);">
+            <div class="role-badge role-producer">FORMER PRODUCER</div>
             <div class="card-body">
-                <span class="quote-mark">“</span>
-                I did it for <b>Popularity</b>. The notifications felt good for about 10 minutes. Then the guilt set in. Clout isn't worth hurting real people.
+                "I started the rumor for Fun and Curiosity. I didn't think about the real person behind the screen. It's not a game."
             </div>
+            <div class="card-tags">#Regret #Empathy</div>
             <div class="card-footer">
-                <span class="hashtag">#Popularity</span>
-                <span class="hashtag">#Excited</span>
-                <span class="hashtag">#Guilty</span>
+                <span>By: Anon_09</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">112</span></span>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">
-                <span class="role-badge role-victim">FORMER VICTIM</span>
-                <span style="font-size:1.2rem;">🛡️</span>
-            </div>
+            <div class="role-badge role-sharer">FORMER SHARER</div>
             <div class="card-body">
-                <span class="quote-mark">“</span>
-                I felt totally <b>Overwhelmed</b> and helpless when everyone attacked. My advice? Don't engage. Screenshot it for evidence, then log off.
+                "I shared it because I wanted to Protect My Friends. But I was actually spreading lies. Loyalty means checking the facts first."
             </div>
+            <div class="card-tags">#Loyalty #FactCheck</div>
             <div class="card-footer">
-                <span class="hashtag">#Helpless</span>
-                <span class="hashtag">#Scared</span>
-                <span class="hashtag">#SelfCare</span>
+                <span>By: Truth_Seeker</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">45</span></span>
+            </div>
+        </div>
+
+        <div class="card" style="transform: rotate(-2deg);">
+            <div class="role-badge role-influencer">FORMER INFLUENCER</div>
+            <div class="card-body">
+                "Chasing Popularity made me lose myself. Don't post things just for likes. Your integrity is worth more."
+            </div>
+            <div class="card-tags">#Popularity #Integrity</div>
+            <div class="card-footer">
+                <span>By: Star_Gazer</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">203</span></span>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">
-                <span class="role-badge role-producer">FORMER PRODUCER</span>
-                <span style="font-size:1.2rem;">⚠️</span>
-            </div>
+            <div class="role-badge role-victim">FORMER VICTIM</div>
             <div class="card-body">
-                <span class="quote-mark">“</span>
-                It started as a joke. Just for <b>Fun</b>. But people didn't get the satire. If you make a joke online, label it. Don't let it become Disinformation.
+                "I was Scared and Angry. But fighting back in the comments only made it worse. Report, Block, Move on."
             </div>
+            <div class="card-tags">#Scared #Action</div>
             <div class="card-footer">
-                <span class="hashtag">#Fun</span>
-                <span class="hashtag">#Confused</span>
-                <span class="hashtag">#Responsibility</span>
+                <span>By: BlueSky</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">67</span></span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <span class="role-badge role-sharer">FORMER SHARER</span>
-                <span style="font-size:1.2rem;">📢</span>
-            </div>
+        <div class="card" style="transform: rotate(1deg);">
+            <div class="role-badge" style="background:black; color:white;">COMMUNITY ACTION</div>
             <div class="card-body">
-                <span class="quote-mark">“</span>
-                Check the date before you share. I shared a 3-year-old article thinking it was new news. It made everyone <b>Angry</b> for no reason.
+                "My one piece of advice? If the headline makes you super emotional instantly... it's probably trying to manipulate you."
             </div>
+            <div class="card-tags">#MediaLiteracy #Pause</div>
             <div class="card-footer">
-                <span class="hashtag">#CheckTheDate</span>
-                <span class="hashtag">#Angry</span>
+                <span>By: The_Mod</span>
+                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">350</span></span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <span class="role-badge role-victim">FORMER VICTIM</span>
-                <span style="font-size:1.2rem;">❤️</span>
-            </div>
-            <div class="card-body">
-                <span class="quote-mark">“</span>
-                You aren't alone. It feels like the whole world hates you, but it's just an algorithm. Talk to a teacher or parent.
-            </div>
-            <div class="card-footer">
-                <span class="hashtag">#Overwhelmed</span>
-                <span class="hashtag">#Support</span>
-            </div>
-        </div>
-        
         </div>
 
-    <div class="glitch-line"></div>
-    
-    <footer style="text-align: center; padding: 20px; color: #555; font-size: 0.8rem;">
-        DEBRIEFING BOARD PROJECT [cite: 1] // EMPOWERING TEEN AGENCY
-    </footer>
-
+    <script>
+        // Simple interactive script for the hearts
+        function like(element) {
+            let countSpan = element.querySelector('.heart-count');
+            let count = parseInt(countSpan.innerText);
+            
+            if (element.classList.contains('liked')) {
+                // Unlike functionality (optional)
+                /* countSpan.innerText = count - 1;
+                element.classList.remove('liked');
+                element.innerHTML = '🖤 <span class="heart-count">' + (count - 1) + '</span>'; */
+            } else {
+                // Like functionality
+                countSpan.innerText = count + 1;
+                element.classList.add('liked');
+                // Change heart color
+                element.innerHTML = '❤️ <span class="heart-count">' + (count + 1) + '</span>';
+            }
+        }
+    </script>
 </body>
 </html>
