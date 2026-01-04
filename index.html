@@ -20,14 +20,41 @@
             padding: 0;
             background-color: var(--bg-color);
             color: white;
-            font-family: 'Courier New', Courier, monospace; /* Tech/Hacker vibe */
+            font-family: 'Courier New', Courier, monospace;
             overflow-x: hidden;
             
-            /* darker background pattern */
+            /* BACKGROUND IMAGE 1: Global Tech Texture */
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+                linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.8)), /* Dark overlay for readability */
+                url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'); /* Cyberpunk/Tech Background */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /* --- DECORATIVE BACKGROUND IMAGES (Floating Elements) --- */
+        .bg-decor-1 {
+            position: fixed;
+            top: 10%;
+            left: -50px;
+            width: 300px;
+            opacity: 0.4;
+            transform: rotate(15deg);
+            z-index: -1;
+            filter: grayscale(100%) contrast(1.2);
+            pointer-events: none;
+        }
+
+        .bg-decor-2 {
+            position: fixed;
+            bottom: 5%;
+            right: -20px;
+            width: 400px;
+            opacity: 0.3;
+            transform: rotate(-10deg);
+            z-index: -1;
+            filter: hue-rotate(90deg) contrast(1.5);
+            pointer-events: none;
         }
 
         /* --- 2. HEADER: GLITCH STYLE --- */
@@ -35,8 +62,9 @@
             padding: 40px 20px;
             text-align: center;
             border-bottom: 4px solid var(--accent-yellow);
-            background: #111;
+            background: rgba(17, 17, 17, 0.9); /* Slight transparency */
             position: relative;
+            backdrop-filter: blur(5px);
         }
 
         h1 {
@@ -57,7 +85,7 @@
             padding: 5px 15px;
             font-weight: bold;
             font-size: 1.2rem;
-            transform: rotate(-2deg); /* Tilted sticker look */
+            transform: rotate(-2deg);
         }
 
         /* --- 3. THE WALL (Masonry Grid) --- */
@@ -69,30 +97,24 @@
             column-gap: 30px; 
         }
 
-        /* --- 4. CARD DESIGN (Stickers & Brutalism) --- */
+        /* --- 4. CARD DESIGN --- */
         .card {
             background: var(--card-bg);
             color: var(--text-main);
-            border-radius: 0px; /* Sharp edges */
+            border-radius: 0px; 
             padding: 25px;
             margin-bottom: 30px; 
             border: 3px solid black;
-            box-shadow: 8px 8px 0px var(--accent-purple); /* Hard shadow */
+            box-shadow: 8px 8px 0px var(--accent-purple); 
             break-inside: avoid; 
             display: inline-block; 
             width: 100%;
             position: relative;
-            transition: transform 0.2s;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif; /* Readable body text */
+            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
-        .card:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 12px 12px 0px var(--accent-yellow);
-        }
-
-        /* Pin/Tape Decoration on top of cards */
+        /* Card Decoration (Tape) */
         .card::before {
             content: '';
             position: absolute;
@@ -108,7 +130,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* Role Badge (e.g. VICTIM, PRODUCER) */
+        /* Role Badges */
         .role-badge {
             display: inline-block;
             font-size: 0.7rem;
@@ -121,7 +143,6 @@
             letter-spacing: 1px;
         }
 
-        /* Color coding the badges based on your tokens */
         .role-victim { background: #ffcccc; color: red; }
         .role-producer { background: #000; color: var(--accent-yellow); }
         .role-sharer { background: #e0e0e0; color: black; }
@@ -141,7 +162,7 @@
             font-weight: bold;
         }
 
-        /* Interactive Footer */
+        /* Footer (Static Hearts) */
         .card-footer {
             margin-top: 20px;
             border-top: 2px dashed #000;
@@ -151,14 +172,17 @@
             align-items: center;
         }
 
-        .heart-btn {
-            cursor: pointer;
-            font-size: 1.5rem;
+        /* Updated Heart Style (Non-clickable) */
+        .heart-display {
+            font-size: 1.2rem;
             user-select: none;
-            transition: transform 0.2s;
+            color: var(--accent-red); /* Always red to show support */
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-        .heart-btn:hover { transform: scale(1.2); }
-        .heart-count { font-size: 1rem; font-weight: bold; font-family: 'Courier New'; }
+        .heart-count { font-family: 'Courier New'; color: black; }
 
         /* --- 5. DECORATIONS --- */
         .warning-tape {
@@ -177,6 +201,10 @@
     </style>
 </head>
 <body>
+
+    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="bg-decor-1" alt="Social Media Decoration">
+    
+    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="bg-decor-2" alt="Hacker Decoration">
 
     <div class="warning-tape">
         /// SYSTEM MESSAGE: AGENCY RESTORED /// BREAK THE CYCLE ///
@@ -197,7 +225,7 @@
             <div class="card-tags">#Overwhelmed #SelfCare</div>
             <div class="card-footer">
                 <span>By: Sarah_J</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">84</span></span>
+                <span class="heart-display">❤️ <span class="heart-count">84</span></span>
             </div>
         </div>
 
@@ -209,7 +237,7 @@
             <div class="card-tags">#Regret #Empathy</div>
             <div class="card-footer">
                 <span>By: Anon_09</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">112</span></span>
+                <span class="heart-display">❤️ <span class="heart-count">112</span></span>
             </div>
         </div>
 
@@ -221,7 +249,7 @@
             <div class="card-tags">#Loyalty #FactCheck</div>
             <div class="card-footer">
                 <span>By: Truth_Seeker</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">45</span></span>
+                <span class="heart-display">❤️ <span class="heart-count">45</span></span>
             </div>
         </div>
 
@@ -233,7 +261,7 @@
             <div class="card-tags">#Popularity #Integrity</div>
             <div class="card-footer">
                 <span>By: Star_Gazer</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">203</span></span>
+                <span class="heart-display">❤️ <span class="heart-count">203</span></span>
             </div>
         </div>
 
@@ -245,7 +273,7 @@
             <div class="card-tags">#Scared #Action</div>
             <div class="card-footer">
                 <span>By: BlueSky</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">67</span></span>
+                <span class="heart-display">❤️ <span class="heart-count">67</span></span>
             </div>
         </div>
 
@@ -257,31 +285,11 @@
             <div class="card-tags">#MediaLiteracy #Pause</div>
             <div class="card-footer">
                 <span>By: The_Mod</span>
-                <span class="heart-btn" onclick="like(this)">🖤 <span class="heart-count">350</span></span>
+                <span class="heart-display">❤️ <span class="heart-count">350</span></span>
             </div>
         </div>
 
-        </div>
+    </div>
 
-    <script>
-        // Simple interactive script for the hearts
-        function like(element) {
-            let countSpan = element.querySelector('.heart-count');
-            let count = parseInt(countSpan.innerText);
-            
-            if (element.classList.contains('liked')) {
-                // Unlike functionality (optional)
-                /* countSpan.innerText = count - 1;
-                element.classList.remove('liked');
-                element.innerHTML = '🖤 <span class="heart-count">' + (count - 1) + '</span>'; */
-            } else {
-                // Like functionality
-                countSpan.innerText = count + 1;
-                element.classList.add('liked');
-                // Change heart color
-                element.innerHTML = '❤️ <span class="heart-count">' + (count + 1) + '</span>';
-            }
-        }
-    </script>
 </body>
 </html>
