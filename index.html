@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MESSAGES FROM TEENAGERS</title>
     <style>
-        /* --- 1. CAMPAIGN AESTHETICS (CSS) --- */
+        /* --- 1. CAMPAIGN AESTHETICS --- */
         :root {
             --bg-color: #111111;
             --card-bg: #f4f4f4;
-            --accent-yellow: #E1FF00; /* Acid Yellow */
-            --accent-blue: #0044FF;   /* Deep Blue */
+            --accent-yellow: #E1FF00;
+            --accent-blue: #0044FF;
             --text-main: #000000;
         }
 
@@ -20,9 +20,11 @@
             background-color: var(--bg-color);
             color: white;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
+            overflow: hidden; /* Hide scrollbars for the "App" feel */
+            height: 100vh;
+            width: 100vw;
             
-            /* BACKGROUND: "Halftone" Pattern (Comic/Zine style) */
+            /* Halftone Background */
             background-image: 
                 radial-gradient(circle, #333 10%, transparent 11%),
                 radial-gradient(circle, #333 10%, transparent 11%);
@@ -30,244 +32,236 @@
             background-position: 0 0, 15px 15px;
         }
 
-        /* --- DECORATIVE FLOATING ICONS (Abstract) --- */
-        .floating-icon {
-            position: fixed;
-            z-index: -1;
-            opacity: 0.2;
-            font-family: sans-serif;
-            font-weight: 900;
-            pointer-events: none;
-            color: var(--accent-yellow);
-        }
-
-        /* Large abstract shapes */
-        .decor-1 { top: 10%; left: -5%; font-size: 15rem; transform: rotate(20deg); }
-        .decor-2 { bottom: 5%; right: -5%; font-size: 15rem; transform: rotate(-15deg); color: #333; }
-        .decor-3 { top: 40%; right: 10%; width: 200px; height: 200px; border: 10px solid var(--accent-yellow); border-radius: 50%; }
-
-        /* --- 2. HEADER: CAMPAIGN POSTER STYLE --- */
+        /* --- 2. HEADER (Fixed at top) --- */
         header {
-            padding: 60px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
             text-align: center;
             background: linear-gradient(180deg, rgba(0,0,0,0.9), transparent);
-            position: relative;
+            z-index: 1; /* Behind the cards */
+            pointer-events: none; /* Let clicks pass through to cards */
         }
 
         h1 {
             font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 3.5rem; /* Large and loud */
+            font-size: 3rem;
             text-transform: uppercase;
-            margin: 0 auto;
+            margin: 0;
             color: white;
-            letter-spacing: 2px;
-            line-height: 1.1;
-            max-width: 900px;
-            /* Text Outline Effect */
             -webkit-text-stroke: 1px white;
             text-shadow: 5px 5px 0px var(--accent-blue);
+            pointer-events: auto; /* Allow selecting text */
         }
 
         .subtitle {
-            margin-top: 20px;
+            margin-top: 10px;
             display: inline-block;
             background: var(--accent-yellow);
             color: black;
-            padding: 10px 25px;
+            padding: 5px 20px;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transform: skew(-10deg); /* Slanted box */
+            transform: skew(-10deg);
+            pointer-events: auto;
         }
 
-        /* --- 3. THE WALL (Masonry Grid) --- */
-        .masonry-wrapper {
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            column-count: 3; 
-            column-gap: 30px; 
-        }
-
-        /* --- 4. CARD DESIGN (Wheat-paste Poster Style) --- */
+        /* --- 3. DRAGGABLE CARD STYLES --- */
         .card {
+            position: absolute; /* Allows moving freely */
             background: var(--card-bg);
             color: var(--text-main);
-            border-radius: 2px; 
-            padding: 25px;
-            margin-bottom: 30px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
-            break-inside: avoid; 
-            display: inline-block; 
-            width: 100%;
-            position: relative;
-            box-sizing: border-box;
-            /* Paper texture effect */
-            background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8));
+            width: 280px; /* Fixed width for sticky notes */
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            cursor: grab; /* Shows hand icon */
+            user-select: none; /* Prevents text highlighting while dragging */
+            transition: transform 0.1s;
+            /* Paper texture */
+            background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9));
         }
 
-        /* "Tape" at the top of cards */
+        .card:active {
+            cursor: grabbing;
+            transform: scale(1.02); /* Slight pop when clicked */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+        }
+
+        /* "Tape" at the top */
         .card::after {
             content: '';
             position: absolute;
-            top: -10px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%) rotate(-2deg);
-            width: 60px;
-            height: 20px;
+            width: 80px;
+            height: 25px;
             background-color: rgba(255, 255, 255, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
-        /* Role Badges */
         .role-badge {
             display: inline-block;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 900;
             text-transform: uppercase;
-            padding: 5px 10px;
-            margin-bottom: 15px;
+            padding: 4px 8px;
+            margin-bottom: 10px;
             border: 2px solid black;
-            box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
         }
 
-        [cite_start]/* Role Colors [cite: 16-20] */
         .role-victim { background: #ff4d4d; color: white; border-color: #ff4d4d; }
         .role-producer { background: #000; color: var(--accent-yellow); border-color: black; }
         .role-sharer { background: white; color: black; border-color: black; }
         .role-influencer { background: var(--accent-yellow); color: black; border-color: var(--accent-yellow); }
 
         .card-body {
-            font-size: 1.2rem;
+            font-size: 1rem;
             line-height: 1.4;
             font-weight: 700;
             font-family: 'Courier New', Courier, monospace;
         }
 
         .card-tags {
-            margin-top: 20px;
-            font-size: 0.85rem;
+            margin-top: 15px;
+            font-size: 0.75rem;
             color: #555;
             font-weight: bold;
             text-transform: uppercase;
             border-top: 2px solid #000;
-            padding-top: 10px;
-            display: block;
+            padding-top: 8px;
         }
 
-        /* Footer (Author Name) */
         .card-footer {
             margin-top: 5px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-align: right;
             color: #888;
             font-style: italic;
         }
 
-        /* --- 5. DECORATIONS --- */
-        .tape-banner {
-            background: var(--accent-yellow);
-            color: black;
+        /* --- DECORATIONS --- */
+        .floating-icon {
+            position: fixed;
+            z-index: 0;
+            opacity: 0.2;
+            font-family: sans-serif;
             font-weight: 900;
-            text-align: center;
-            padding: 10px;
-            font-size: 1rem;
-            letter-spacing: 3px;
-            /* Striped warning tape pattern */
-            background-image: repeating-linear-gradient(
-                45deg,
-                var(--accent-yellow),
-                var(--accent-yellow) 10px,
-                #000 10px,
-                #000 20px
-            );
-            color: white;
-            text-shadow: 1px 1px 0 #000;
-            border-bottom: 2px solid white;
+            pointer-events: none;
+            color: var(--accent-yellow);
         }
+        .decor-1 { top: 10%; left: 5%; font-size: 10rem; transform: rotate(20deg); }
+        .decor-2 { bottom: 10%; right: 10%; font-size: 15rem; transform: rotate(-15deg); color: #333; }
 
-        /* Responsive */
-        @media (max-width: 800px) { 
-            .masonry-wrapper { column-count: 2; } 
-            h1 { font-size: 2rem; }
-        }
-        @media (max-width: 500px) { .masonry-wrapper { column-count: 1; } }
     </style>
 </head>
 <body>
 
     <div class="floating-icon decor-1">?</div>
     <div class="floating-icon decor-2">!</div>
-    <div class="floating-icon decor-3"></div>
-
-    <div class="tape-banner">
-        VERIFY // CHECK // THINK // VERIFY // CHECK // THINK
-    </div>
 
     <header>
         <h1>MESSAGES FROM TEENAGERS TO COMBAT MISINFORMATION</h1>
-        <div class="subtitle">Step 3: Community Action Board</div>
+        <div class="subtitle">Drag the notes to organize the board</div>
     </header>
 
-    <div class="masonry-wrapper">
-
-        <div class="card" style="transform: rotate(-1deg);">
+    <div id="board">
+        
+        <div class="card" style="top: 20%; left: 10%; transform: rotate(-3deg);">
             <div class="role-badge role-victim">FORMER VICTIM</div>
-            <div class="card-body">
-                "It felt overwhelming when everyone attacked. I wish I knew sooner that I could just log off. You don't owe the internet a reaction."
-            </div>
+            <div class="card-body">"I wish I knew sooner that I could just log off. You don't owe the internet a reaction."</div>
             <div class="card-tags">#Overwhelmed #SelfCare</div>
             <div class="card-footer">— Sarah_J</div>
         </div>
 
-        <div class="card" style="transform: rotate(2deg);">
+        <div class="card" style="top: 30%; left: 40%; transform: rotate(2deg);">
             <div class="role-badge role-producer">FORMER PRODUCER</div>
-            <div class="card-body">
-                "I started the rumor for Fun and Curiosity. I didn't think about the real person behind the screen. It's not a game."
-            </div>
+            <div class="card-body">"I started the rumor for Fun. I didn't think about the real person behind the screen."</div>
             <div class="card-tags">#Regret #Empathy</div>
             <div class="card-footer">— Anon_09</div>
         </div>
 
-        <div class="card">
+        <div class="card" style="top: 50%; left: 70%; transform: rotate(-1deg);">
             <div class="role-badge role-sharer">FORMER SHARER</div>
-            <div class="card-body">
-                "I shared it because I wanted to Protect My Friends. But I was actually spreading lies. Loyalty means checking the facts first."
-            </div>
+            <div class="card-body">"Loyalty means checking the facts first. Don't let friends use you to spread lies."</div>
             <div class="card-tags">#Loyalty #FactCheck</div>
             <div class="card-footer">— Truth_Seeker</div>
         </div>
 
-        <div class="card" style="transform: rotate(-2deg);">
+        <div class="card" style="top: 60%; left: 20%; transform: rotate(4deg);">
             <div class="role-badge role-influencer">FORMER INFLUENCER</div>
-            <div class="card-body">
-                "Chasing Popularity made me lose myself. Don't post things just for likes. Your integrity is worth more."
-            </div>
+            <div class="card-body">"Chasing Popularity made me lose myself. Integrity is worth more than likes."</div>
             <div class="card-tags">#Popularity #Integrity</div>
             <div class="card-footer">— Star_Gazer</div>
         </div>
 
-        <div class="card">
+        <div class="card" style="top: 15%; left: 75%; transform: rotate(-5deg);">
             <div class="role-badge role-victim">FORMER VICTIM</div>
-            <div class="card-body">
-                "I was Scared and Angry. But fighting back in the comments only made it worse. Report, Block, Move on."
-            </div>
+            <div class="card-body">"Fighting back in the comments only made it worse. Report, Block, Move on."</div>
             <div class="card-tags">#Scared #Action</div>
             <div class="card-footer">— BlueSky</div>
         </div>
 
-        <div class="card" style="transform: rotate(1deg);">
-            <div class="role-badge" style="background:black; color:white; border-color:black;">GENERAL ADVICE</div>
-            <div class="card-body">
-                "My one piece of advice? If the headline makes you super emotional instantly... it's probably trying to manipulate you."
-            </div>
-            <div class="card-tags">#MediaLiteracy #Pause</div>
+        <div class="card" style="top: 70%; left: 50%; transform: rotate(1deg);">
+            <div class="role-badge" style="background:black; color:white;">ADVICE</div>
+            <div class="card-body">"If the headline makes you super emotional instantly... it's probably trying to manipulate you."</div>
+            <div class="card-tags">#MediaLiteracy</div>
             <div class="card-footer">— The_Mod</div>
         </div>
 
     </div>
 
+    <script>
+        // Select all cards
+        const cards = document.querySelectorAll('.card');
+        let zIndexCounter = 10; // Used to bring cards to front
+
+        cards.forEach(card => {
+            let isDragging = false;
+            let startX, startY, initialLeft, initialTop;
+
+            card.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                
+                // Bring to front
+                zIndexCounter++;
+                card.style.zIndex = zIndexCounter;
+
+                // Calculate starting position
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                // Get current CSS position
+                const rect = card.getBoundingClientRect();
+                initialLeft = rect.left;
+                initialTop = rect.top;
+
+                // Change cursor
+                card.style.cursor = 'grabbing';
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                // Calculate how much the mouse moved
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+
+                // Update position
+                card.style.left = `${initialLeft + dx}px`;
+                card.style.top = `${initialTop + dy}px`;
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    card.style.cursor = 'grab';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
