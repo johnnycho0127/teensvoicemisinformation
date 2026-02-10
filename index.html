@@ -20,8 +20,7 @@
             background-color: var(--bg-color);
             color: white;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            overflow: hidden; /* Hide scrollbars for the "App" feel */
-            height: 100vh;
+            min-height: 200vh; /* Increased height to accommodate more cards */
             width: 100vw;
             
             /* Halftone Background */
@@ -30,19 +29,20 @@
                 radial-gradient(circle, #333 10%, transparent 11%);
             background-size: 30px 30px;
             background-position: 0 0, 15px 15px;
+            background-attachment: fixed;
         }
 
         /* --- 2. HEADER (Fixed at top) --- */
         header {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             padding: 20px;
             text-align: center;
             background: linear-gradient(180deg, rgba(0,0,0,0.9), transparent);
-            z-index: 1; /* Behind the cards */
-            pointer-events: none; /* Let clicks pass through to cards */
+            z-index: 1000; 
+            pointer-events: none; 
         }
 
         h1 {
@@ -53,7 +53,7 @@
             color: white;
             -webkit-text-stroke: 1px white;
             text-shadow: 5px 5px 0px var(--accent-blue);
-            pointer-events: auto; /* Allow selecting text */
+            pointer-events: auto;
         }
 
         .subtitle {
@@ -70,27 +70,32 @@
         }
 
         /* --- 3. DRAGGABLE CARD STYLES --- */
+        #board {
+            position: relative;
+            padding-top: 150px;
+            width: 100%;
+        }
+
         .card {
-            position: absolute; /* Allows moving freely */
+            position: absolute;
             background: var(--card-bg);
             color: var(--text-main);
-            width: 260px; /* Slightly narrower to fit 8 cards */
+            width: 260px;
             padding: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            cursor: grab; /* Shows hand icon */
-            user-select: none; /* Prevents text highlighting while dragging */
+            cursor: grab;
+            user-select: none;
             transition: transform 0.1s;
-            /* Paper texture */
             background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9));
+            touch-action: none; /* Helps with mobile dragging */
         }
 
         .card:active {
             cursor: grabbing;
-            transform: scale(1.02); /* Slight pop when clicked */
+            transform: scale(1.05) !important;
             box-shadow: 0 15px 35px rgba(0,0,0,0.8);
         }
 
-        /* "Tape" at the top */
         .card::after {
             content: '';
             position: absolute;
@@ -113,7 +118,6 @@
             border: 2px solid black;
         }
 
-        /* Color variations for visual interest */
         .style-red { background: #ff4d4d; color: white; border-color: #ff4d4d; }
         .style-black { background: #000; color: var(--accent-yellow); border-color: black; }
         .style-white { background: white; color: black; border-color: black; }
@@ -137,26 +141,17 @@
             word-wrap: break-word;
         }
 
-        .card-footer {
-            margin-top: 5px;
-            font-size: 0.7rem;
-            text-align: right;
-            color: #888;
-            font-style: italic;
-        }
-
-        /* --- DECORATIONS --- */
         .floating-icon {
             position: fixed;
             z-index: 0;
-            opacity: 0.2;
+            opacity: 0.1;
             font-family: sans-serif;
             font-weight: 900;
             pointer-events: none;
             color: var(--accent-yellow);
         }
-        .decor-1 { top: 10%; left: 5%; font-size: 10rem; transform: rotate(20deg); }
-        .decor-2 { bottom: 10%; right: 10%; font-size: 15rem; transform: rotate(-15deg); color: #333; }
+        .decor-1 { top: 20%; left: 5%; font-size: 10rem; transform: rotate(20deg); }
+        .decor-2 { bottom: 20%; right: 10%; font-size: 15rem; transform: rotate(-15deg); color: #333; }
 
     </style>
 </head>
@@ -171,104 +166,159 @@
     </header>
 
     <div id="board">
-        
-        <div class="card" style="top: 15%; left: 5%; transform: rotate(-3deg);">
+        <div class="card" style="top: 150px; left: 50px; transform: rotate(-3deg);">
             <div class="role-badge style-white">ACTION</div>
             <div class="card-body">"Think & analyze for even a little before sharing or believing"</div>
             <div class="card-tags">#CriticalThinking #FactCheck</div>
         </div>
 
-        <div class="card" style="top: 20%; left: 30%; transform: rotate(2deg);">
-            <div class="role-badge style-red">TEENS VOICES</div>
+        <div class="card" style="top: 180px; left: 350px; transform: rotate(2deg);">
+            <div class="role-badge style-red">ADVICE</div>
             <div class="card-body">"Please STOP watching short form videos on the daily, it can greatly damage memory and recognition."</div>
             <div class="card-tags">#DigitalWellness #BrainHealth</div>
         </div>
 
-        <div class="card" style="top: 15%; left: 55%; transform: rotate(-1deg);">
-            <div class="role-badge style-black">MISINFORMATION</div>
-            <div class="card-body">"Misinformation can be harmful to everyone involved & it can spread very quickly. You shouldn't create it or spread it."</div>
-            <div class="card-tags">#Misinformation #DigitalFootprint</div>
+        <div class="card" style="top: 160px; left: 650px; transform: rotate(-1deg);">
+            <div class="role-badge style-black">TRUTH</div>
+            <div class="card-body">"Don't say things about other people if you don't know if it's true."</div>
+            <div class="card-tags">#Integrity #NoRumors</div>
         </div>
 
-        <div class="card" style="top: 25%; left: 80%; transform: rotate(4deg);">
-            <div class="role-badge style-yellow">TEENS VOICES</div>
-            <div class="card-body">"Don't say things about other people if you don't know if it's true"</div>
-            <div class="card-tags">#NoRumors #TruthMatters</div>
+        <div class="card" style="top: 200px; left: 950px; transform: rotate(4deg);">
+            <div class="role-badge style-yellow">CAUTION</div>
+            <div class="card-body">"Check multiple sources, don't be dumb."</div>
+            <div class="card-tags">#FactCheck #StaySmart</div>
         </div>
 
-        <div class="card" style="top: 55%; left: 10%; transform: rotate(-5deg);">
-            <div class="role-badge style-yellow">TEENS VOICES</div>
-            <div class="card-body">"Be responsible for what you do on the internet & know the consequences of your actions"</div>
-            <div class="card-tags">#DigitalResponsibility</div>
+        <div class="card" style="top: 450px; left: 100px; transform: rotate(3deg);">
+            <div class="role-badge style-white">SOCIAL</div>
+            <div class="card-body">"Make sure you can trust your friends and that you are all chill with each other. Having douchebag friends sucks butt."</div>
+            <div class="card-tags">#CircleOfTrust #VibeCheck</div>
         </div>
 
-        <div class="card" style="top: 50%; left: 35%; transform: rotate(1deg);">
-            <div class="role-badge style-black">TEENS VOICES</div>
-            <div class="card-body">"Misinformation can spiral and share very quickly since it's usually shocking. Be careful when you're sharing sketchy posts."</div>
-            <div class="card-tags">#ViralNews #StayAlert</div>
+        <div class="card" style="top: 480px; left: 420px; transform: rotate(-2deg);">
+            <div class="role-badge style-red">VERIFY</div>
+            <div class="card-body">"Check the source. Double check if the idea is crazy. Triple check if it's actually insane."</div>
+            <div class="card-tags">#Research #SourceCheck</div>
         </div>
 
-        <div class="card" style="top: 60%; left: 60%; transform: rotate(-2deg);">
-            <div class="role-badge style-white">TEENS VOICES</div>
-            <div class="card-body">"Don't believe everything you see/hear on the internet."</div>
-            <div class="card-tags">#Skepticism #InternetTruth</div>
+        <div class="card" style="top: 430px; left: 750px; transform: rotate(5deg);">
+            <div class="role-badge style-black">AI SAFETY</div>
+            <div class="card-body">"Run all pictures and videos through an AI checker before believing it's real or posting about it."</div>
+            <div class="card-tags">#DeepFake #AIAwareness</div>
         </div>
 
-        <div class="card" style="top: 55%; left: 82%; transform: rotate(3deg);">
-            <div class="role-badge style-red">PLAN</div>
-            <div class="card-body">"Be careful who you share thing to, also you should check with the victim beforehand."</div>
-            <div class="card-tags">#Consent #Privacy #Respect</div>
+        <div class="card" style="top: 750px; left: 50px; transform: rotate(-4deg);">
+            <div class="role-badge style-yellow">POSTING</div>
+            <div class="card-body">"Think about the impacts your actions have on others and don't share images of people without permission."</div>
+            <div class="card-tags">#Privacy #Consent</div>
+        </div>
+
+        <div class="card" style="top: 780px; left: 380px; transform: rotate(2deg);">
+            <div class="role-badge style-white">ADVICE</div>
+            <div class="card-body">"Things on the internet can last way longer than you realize. Think before you post."</div>
+            <div class="card-tags">#DigitalFootprint #Forever</div>
+        </div>
+
+        <div class="card" style="top: 720px; left: 700px; transform: rotate(-3deg);">
+            <div class="role-badge style-red">URGENT</div>
+            <div class="card-body">"Sharing private information can be dangerous so you should think before you send."</div>
+            <div class="card-tags">#SafetyFirst #DoxingAwareness</div>
+        </div>
+
+        <div class="card" style="top: 1000px; left: 150px; transform: rotate(1deg);">
+            <div class="role-badge style-black">COMMUNICATION</div>
+            <div class="card-body">"Speak clearly and think of misunderstandings before they come about."</div>
+            <div class="card-tags">#Clarity #Communication</div>
+        </div>
+
+        <div class="card" style="top: 1050px; left: 500px; transform: rotate(-5deg);">
+            <div class="role-badge style-yellow">FACTS</div>
+            <div class="card-body">"I think fact checking is very important in this day and age with disinformation spread on purpose."</div>
+            <div class="card-tags">#AntiPropaganda #Truth</div>
+        </div>
+
+        <div class="card" style="top: 1020px; left: 850px; transform: rotate(4deg);">
+            <div class="role-badge style-white">ADVICE</div>
+            <div class="card-body">"It doesn't matter what story is online, if it's complex, the story isn't what it seems."</div>
+            <div class="card-tags">#Complexity #ReadDeeper</div>
+        </div>
+
+        <div class="card" style="top: 1300px; left: 100px; transform: rotate(-2deg);">
+            <div class="role-badge style-red">ACTION</div>
+            <div class="card-body">"Be sure to look up everything you are even mildly skeptical about."</div>
+            <div class="card-tags">#Curiosity #Verify</div>
+        </div>
+
+        <div class="card" style="top: 1350px; left: 450px; transform: rotate(3deg);">
+            <div class="role-badge style-black">KINDNESS</div>
+            <div class="card-body">"Think about your actions, even if it was meant as a joke your actions could affect others negatively."</div>
+            <div class="card-tags">#Empathy #NotAJoke</div>
+        </div>
+
+        <div class="card" style="top: 1320px; left: 800px; transform: rotate(-1deg);">
+            <div class="role-badge style-yellow">WARNING</div>
+            <div class="card-body">"Words often get mixed up and warped easily so be careful who you choose to trust with harmful info."</div>
+            <div class="card-tags">#Trust #Rumors</div>
         </div>
 
     </div>
 
     <script>
-        // Select all cards
         const cards = document.querySelectorAll('.card');
-        let zIndexCounter = 10; // Used to bring cards to front
+        let zIndexCounter = 10;
 
         cards.forEach(card => {
             let isDragging = false;
             let startX, startY, initialLeft, initialTop;
 
-            card.addEventListener('mousedown', (e) => {
+            card.addEventListener('mousedown', startDrag);
+            card.addEventListener('touchstart', startDrag, { passive: false });
+
+            function startDrag(e) {
                 isDragging = true;
-                
-                // Bring to front
                 zIndexCounter++;
                 card.style.zIndex = zIndexCounter;
 
-                // Calculate starting position
-                startX = e.clientX;
-                startY = e.clientY;
+                const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+                startX = clientX;
+                startY = clientY;
                 
-                // Get current CSS position
                 const rect = card.getBoundingClientRect();
-                initialLeft = rect.left;
-                initialTop = rect.top;
+                initialLeft = rect.left + window.scrollX;
+                initialTop = rect.top + window.scrollY;
 
-                // Change cursor
                 card.style.cursor = 'grabbing';
-            });
+                if(e.type === 'touchstart') e.preventDefault();
+            }
 
-            window.addEventListener('mousemove', (e) => {
+            window.addEventListener('mousemove', moveDrag);
+            window.addEventListener('touchmove', moveDrag, { passive: false });
+
+            function moveDrag(e) {
                 if (!isDragging) return;
 
-                // Calculate how much the mouse moved
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
+                const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
 
-                // Update position
+                const dx = clientX - startX;
+                const dy = clientY - startY;
+
                 card.style.left = `${initialLeft + dx}px`;
                 card.style.top = `${initialTop + dy}px`;
-            });
+            }
 
-            window.addEventListener('mouseup', () => {
+            window.addEventListener('mouseup', stopDrag);
+            window.addEventListener('touchend', stopDrag);
+
+            function stopDrag() {
                 if (isDragging) {
                     isDragging = false;
                     card.style.cursor = 'grab';
                 }
-            });
+            }
         });
     </script>
 </body>
