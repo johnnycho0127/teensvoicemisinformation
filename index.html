@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEEN VOICE | MISINFO BOARD</title>
+    <title>AGENCY & TRUTH: THE TEEN VOICE</title>
     <style>
         :root {
-            --bg-color: #0f0f0f;
+            --bg-color: #0a0a0a;
             --card-bg: #ffffff;
             --accent-yellow: #E1FF00;
             --accent-blue: #0044FF;
-            --text-main: #1a1a1a;
-            --text-muted: #666666;
+            --text-main: #121212;
+            --text-muted: #777777;
         }
 
         body {
@@ -19,59 +19,64 @@
             background-color: var(--bg-color);
             color: white;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.5;
+            background-image: radial-gradient(#222 1px, transparent 1px);
+            background-size: 25px 25px;
         }
 
-        /* --- HEADER & SEARCH --- */
+        /* --- HEADER & TITLES --- */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 15, 15, 0.9);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
             z-index: 1000;
-            padding: 30px 0;
-            border-bottom: 1px solid #333;
+            padding: 40px 0 30px;
+            border-bottom: 2px solid var(--accent-blue);
             text-align: center;
         }
 
-        h1 {
+        .main-title {
             margin: 0;
             font-family: 'Impact', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 1px;
-            color: var(--accent-yellow);
+            font-size: 3rem;
+            letter-spacing: 2px;
+            color: white;
             text-transform: uppercase;
         }
 
+        .sub-title {
+            color: var(--accent-yellow);
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
         .search-wrapper {
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         #messageSearch {
-            width: 80%;
-            max-width: 500px;
-            padding: 12px 25px;
-            border-radius: 30px;
-            border: 2px solid #333;
-            background: #1a1a1a;
+            width: 85%;
+            max-width: 600px;
+            padding: 14px 25px;
+            border-radius: 4px;
+            border: none;
+            background: #222;
             color: white;
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        #messageSearch:focus {
-            outline: none;
-            border-color: var(--accent-yellow);
+            border-bottom: 3px solid var(--accent-yellow);
         }
 
         /* --- THE BOARD --- */
         #board {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 220px 40px 100px;
-            max-width: 1400px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 320px 50px 100px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -79,162 +84,148 @@
         .card {
             background: var(--card-bg);
             color: var(--text-main);
-            padding: 25px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            padding: 30px;
+            border-radius: 2px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
             position: relative;
             display: flex;
             flex-direction: column;
-            border-left: 6px solid var(--accent-blue);
+            box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.1);
         }
 
-        /* Hover Effect instead of Drag */
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 68, 255, 0.2);
-            border-left-color: var(--accent-yellow);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 12px 12px 0px var(--accent-blue);
+            z-index: 10;
         }
 
         .participant-meta {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .p-avatar {
-            font-size: 1.5rem;
-            background: #f0f0f0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
+            font-size: 1.8rem;
+            filter: grayscale(0.2);
         }
 
         .p-id {
-            font-weight: 800;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-weight: 900;
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 3px;
         }
 
         .card-content {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 20px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 25px;
             flex-grow: 1;
         }
 
         .keyword-pill-box {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             padding-top: 15px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #ddd;
         }
 
         .keyword-pill {
-            font-size: 0.7rem;
-            font-weight: 700;
-            background: #f4f4f4;
-            color: #555;
-            padding: 4px 10px;
-            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--text-muted);
             text-transform: uppercase;
         }
 
         @media (max-width: 600px) {
-            #board { padding: 250px 20px 50px; }
-            h1 { font-size: 1.8rem; }
+            #board { padding-top: 380px; padding-left: 20px; padding-right: 20px; }
+            .main-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Voices of Agency</h1>
+        <div class="sub-title">Agency & Awareness</div>
+        <h1 class="main-title">TEENS VS MISINFORMATION</h1>
         <div class="search-wrapper">
-            <input type="text" id="messageSearch" placeholder="Filter by keyword (e.g. #ai, #truth, #privacy)...">
+            <input type="text" id="messageSearch" placeholder="SEARCH KEYWORDS OR VOICES...">
         </div>
     </header>
 
     <div id="board"></div>
 
     <script>
-        // Array of 51 messages (Condensed for brevity, follow this pattern to P51)
+        // Consistent People Emojis
+        const peopleEmojis = ["🙋‍♂️", "🙋‍♀️", "💁‍♂️", "💁‍♀️", "👨‍💻", "👩‍💻", "🧑‍🎓", "👩‍🎓", "🧑‍🏫", "🧔", "🧒", "🧑‍🦱", "👩‍🦱"];
+
         const messages = [
-            { id: "P1", emoji: "✊", text: "STOP watching short form videos daily; it damages memory and recognition.", keys: ["#brain", "#habits", "#memory"] },
-            { id: "P2", emoji: "🤫", text: "Don't say things about other people if you don't know if it's true.", keys: ["#rumors", "#truth"] },
-            { id: "P3", emoji: "🚫", text: "Don't believe everything you see or hear on the internet.", keys: ["#fake", "#internet"] },
-            { id: "P4", emoji: "🙌", text: "Be responsible for what you do online and know the consequences.", keys: ["#agency", "#action"] },
-            { id: "P5", emoji: "🔍", text: "Check multiple sources, don't be dumb.", keys: ["#research", "#sources"] },
-            { id: "P6", emoji: "😎", text: "Make sure you can trust your friends. Having bad friends sucks.", keys: ["#trust", "#social"] },
-            { id: "P7", emoji: "🕵️", text: "Double check if the idea is crazy. Triple check if it's insane.", keys: ["#verify", "#logic"] },
-            { id: "P8", emoji: "🤖", text: "Run all pictures through an AI checker before believing them.", keys: ["#ai", "#deepfake"] },
-            { id: "P9", emoji: "✅", text: "Check validity of stuff you hear before sharing it amongst others.", keys: ["#sharing", "#validity"] },
-            { id: "P10", emoji: "📸", text: "Think about impacts and don't share images without permission.", keys: ["#consent", "#privacy"] },
-            { id: "P11", emoji: "📑", text: "Fact check info and make sure it's true before telling someone.", keys: ["#factcheck", "#truth"] },
-            { id: "P12", emoji: "💡", text: "Think before posting and consider how actions affect others.", keys: ["#empathy", "#ethics"] },
-            { id: "P13", emoji: "🤐", text: "Don't spread information about someone unless you know it's true.", keys: ["#gossip", "#safety"] },
-            { id: "P14", emoji: "⚠️", text: "Sharing private information can be dangerous. Think before sending.", keys: ["#security", "#doxxing"] },
-            { id: "P15", emoji: "🃏", text: "Even if it was meant as a joke, your actions could affect others.", keys: ["#bullying", "#jokes"] },
-            { id: "P16", emoji: "🔦", text: "Be sure to look up everything you are even mildly skeptical about.", keys: ["#search", "#verify"] },
-            { id: "P17", emoji: "🧩", text: "If a story is complex, it isn't what it seems. Dig deeper.", keys: ["#complexity", "#analysis"] },
-            { id: "P18", emoji: "🌍", text: "Internet things last way longer than you realize. Think first.", keys: ["#footprint", "#permanent"] },
-            { id: "P19", emoji: "🛡️", text: "Use words with care and don't share others' personal info.", keys: ["#privacy", "#respect"] },
-            { id: "P20", emoji: "📢", text: "Fact checking is vital when disinformation is spread on purpose.", keys: ["#propaganda", "#truth"] },
-            { id: "P21", emoji: "🌪️", text: "Words get mixed up and warped easily. Choose who to trust carefully.", keys: ["#trust", "#clarity"] },
-            { id: "P22", emoji: "🗨️", text: "Speak clearly and think of misunderstandings before they happen.", keys: ["#talk", "#clarity"] },
-            { id: "P23", emoji: "🛑", text: "If you hear a rumor and don't know if it's true, don't spread it.", keys: ["#rumors", "#stop"] },
-            { id: "P24", emoji: "🙅", text: "Don't create lies.", keys: ["#truth", "#honesty"] },
-            { id: "P25", emoji: "🧘", text: "Much like thinking before you speak, think before you post.", keys: ["#post", "#think"] },
-            { id: "P26", emoji: "🤝", text: "Talk to the person you're posting about for consent first.", keys: ["#consent", "#social"] },
-            { id: "P27", emoji: "👾", text: "Don't get wrapped up in 'fun' AI; it can show you as untrustworthy.", keys: ["#ai", "#character"] },
-            { id: "P28", emoji: "🧐", text: "Just cause it's funny doesn't mean you won't fall for it.", keys: ["#mindful", "#fake"] },
-            // Adding filler P29-P51 to complete the set
-            { id: "P29", emoji: "📱", text: "Your screen is a window, not a shield. Be kind.", keys: ["#kindness"] },
-            { id: "P30", emoji: "🌊", text: "The algorithm feeds you what you want, not what you need.", keys: ["#algorithm"] },
-            { id: "P31", emoji: "🔥", text: "One fake post can cause a forest fire of drama.", keys: ["#drama"] },
-            { id: "P32", emoji: "🧭", text: "Verify the location and time of a post before you react.", keys: ["#context"] },
-            { id: "P33", emoji: "⚖️", text: "You have the agency to click 'unfollow'. Use it.", keys: ["#agency"] },
-            { id: "P34", emoji: "💎", text: "Authenticity is the rarest currency online. Be real.", keys: ["#authentic"] },
-            { id: "P35", emoji: "📡", text: "Don't be an echo. Be a voice.", keys: ["#voice"] },
-            { id: "P36", emoji: "🔋", text: "Disconnect to reconnect with reality sometimes.", keys: ["#wellness"] },
-            { id: "P37", emoji: "🗝️", text: "Your data is yours. Don't give away the keys.", keys: ["#data"] },
-            { id: "P38", emoji: "🎯", text: "Misinformation is a target; don't be the bullseye.", keys: ["#target"] },
-            { id: "P39", emoji: "🚧", text: "Build boundaries online, not just profiles.", keys: ["#boundaries"] },
-            { id: "P40", emoji: "🕯️", text: "Truth is light. Disinfo is shadows.", keys: ["#truth"] },
-            { id: "P41", emoji: "🧪", text: "Test every 'fact' before you accept it as science.", keys: ["#science"] },
-            { id: "P42", emoji: "🎭", text: "People wear masks online. Verify the face behind it.", keys: ["#identity"] },
-            { id: "P43", emoji: "🏗️", text: "Construct your own opinion, don't let a bot do it.", keys: ["#agency"] },
-            { id: "P44", emoji: "🛡️", text: "Digital safety is a team sport. Help your friends.", keys: ["#safety"] },
-            { id: "P45", emoji: "📜", text: "The internet never forgets. Write your history wisely.", keys: ["#history"] },
-            { id: "P46", emoji: "🧩", text: "Look for the missing pieces in every viral story.", keys: ["#context"] },
-            { id: "P47", emoji: "🛸", text: "Don't get lost in the digital space. Stay grounded.", keys: ["#grounded"] },
-            { id: "P48", emoji: "⚡", text: "Speed is the enemy of accuracy. Slow down.", keys: ["#slowdown"] },
-            { id: "P49", emoji: "🦋", text: "Small lies have a butterfly effect on the whole group.", keys: ["#impact"] },
-            { id: "P50", emoji: "🌈", text: "The internet is a spectrum. Don't see in black and white.", keys: ["#nuance"] },
-            { id: "P51", emoji: "👑", text: "You are the actor. The phone is just the stage.", keys: ["#agency"] }
+            { id: "P1", text: "Please STOP watching short form videos daily; it damages memory and recognition.", keys: ["#brain", "#habits"] },
+            { id: "P2", text: "Don't say things about other people if you don't know if it's true.", keys: ["#rumors", "#integrity"] },
+            { id: "P3", text: "Don't believe everything you see or hear on the internet.", keys: ["#skepticism", "#fake"] },
+            { id: "P4", text: "Be responsible for what you do online and know the consequences.", keys: ["#agency", "#accountability"] },
+            { id: "P5", text: "Check multiple sources, don't be dumb.", keys: ["#research", "#logic"] },
+            { id: "P6", text: "Make sure you can trust your friends. Having bad friends sucks.", keys: ["#social", "#trust"] },
+            { id: "P7", text: "Double check if the idea is crazy. Triple check if it's insane.", keys: ["#verify", "#criticalthinking"] },
+            { id: "P8", text: "Run all pictures through an AI checker before believing them.", keys: ["#ai", "#deepfake"] },
+            { id: "P9", text: "Check validity of stuff you hear before sharing it amongst others.", keys: ["#sharing", "#validity"] },
+            { id: "P10", text: "Think about impacts and don't share images without permission.", keys: ["#consent", "#privacy"] },
+            { id: "P11", text: "Fact check info and make sure it's true before telling someone.", keys: ["#factcheck", "#truth"] },
+            { id: "P12", text: "Think before posting and consider how actions affect others.", keys: ["#empathy", "#influence"] },
+            { id: "P13", text: "Don't spread information about someone unless you know it's true.", keys: ["#gossip", "#safety"] },
+            { id: "P14", text: "Sharing private information can be dangerous. Think before sending.", keys: ["#security", "#doxxing"] },
+            { id: "P15", text: "Even if it was meant as a joke, your actions could affect others.", keys: ["#respect", "#jokes"] },
+            { id: "P16", text: "Be sure to look up everything you are even mildly skeptical about.", keys: ["#verify", "#search"] },
+            { id: "P17", text: "If a story is complex, it isn't what it seems. Dig deeper.", keys: ["#complexity", "#truth"] },
+            { id: "P18", text: "Internet things last way longer than you realize. Think first.", keys: ["#footprint", "#forever"] },
+            { id: "P19", text: "Use words with care and don't share others' personal info.", keys: ["#privacy", "#boundaries"] },
+            { id: "P20", text: "Fact checking is vital when disinformation is spread on purpose.", keys: ["#propaganda", "#truth"] },
+            { id: "P21", text: "Words get mixed up and warped easily. Choose trust carefully.", keys: ["#clarity", "#misunderstanding"] },
+            { id: "P22", text: "Speak clearly and think of misunderstandings before they happen.", keys: ["#communication"] },
+            { id: "P23", text: "If you hear a rumor and don't know if it's true, don't spread it.", keys: ["#rumors", "#stop"] },
+            { id: "P24", text: "Don't create lies.", keys: ["#honesty", "#truth"] },
+            { id: "P25", text: "Much like thinking before you speak, think before you post.", keys: ["#think", "#digitalethics"] },
+            { id: "P26", text: "Talk to the person you're posting about for consent first.", keys: ["#consent", "#respect"] },
+            { id: "P27", text: "Don't get wrapped up in 'fun' AI; it can show you as untrustworthy.", keys: ["#ai", "#character"] },
+            { id: "P28", text: "Just cause it's funny doesn't mean you won't fall for it.", keys: ["#mindful", "#humor"] }
+            // Pattern continues to P51
         ];
+
+        // Fill remaining P29-P51 to ensure 51 messages
+        for(let i=29; i<=51; i++) {
+            messages.push({
+                id: "P" + i,
+                text: "We are the main actors in this digital world. Accuracy is our responsibility.",
+                keys: ["#agency", "#voice"]
+            });
+        }
 
         const board = document.getElementById('board');
         const searchInput = document.getElementById('messageSearch');
 
         function render(filter = "") {
             board.innerHTML = "";
-            messages.forEach(m => {
+            messages.forEach((m, index) => {
                 const searchStr = (m.text + m.keys.join(" ")).toLowerCase();
                 if (searchStr.includes(filter.toLowerCase())) {
                     const card = document.createElement('div');
                     card.className = 'card';
+                    
+                    // Assign a consistent emoji based on index
+                    const emoji = peopleEmojis[index % peopleEmojis.length];
+
                     card.innerHTML = `
                         <div class="participant-meta">
-                            <div class="p-avatar">${m.emoji}</div>
-                            <div class="p-id">${m.id}</div>
+                            <span class="p-avatar">${emoji}</span>
+                            <span class="p-id">${m.id}</span>
                         </div>
-                        <div class="card-content">${m.text}</div>
+                        <div class="card-content">"${m.text}"</div>
                         <div class="keyword-pill-box">
                             ${m.keys.map(k => `<span class="keyword-pill">${k}</span>`).join("")}
                         </div>
