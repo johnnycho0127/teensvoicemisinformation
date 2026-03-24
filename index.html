@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOICES VS MISINFO | TEEN MESSAGE BOARD</title>
+    <title>VOICES VS MISINFO</title>
     <style>
         :root {
             --bg-color: #111111;
-            --card-bg: #f4f4f4;
+            --card-bg: #ffffff;
             --accent-yellow: #E1FF00;
             --accent-blue: #0044FF;
             --text-main: #000000;
@@ -15,247 +15,234 @@
 
         body {
             margin: 0;
-            padding: 0;
             background-color: var(--bg-color);
             color: white;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle, #333 10%, transparent 11%),
-                radial-gradient(circle, #333 10%, transparent 11%);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-            background-attachment: fixed;
+            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
+        /* --- SEARCH & HEADER --- */
         header {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            padding: 20px;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
             text-align: center;
-            background: linear-gradient(180deg, rgba(0,0,0,0.95), transparent);
-            z-index: 2000; 
         }
 
-        h1 {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: clamp(1.5rem, 5vw, 3.5rem);
-            text-transform: uppercase;
-            margin: 0;
+        .search-container {
+            margin-top: 15px;
+        }
+
+        #messageSearch {
+            width: 300px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--accent-yellow);
+            background: #222;
             color: white;
-            -webkit-text-stroke: 1px white;
-            text-shadow: 4px 4px 0px var(--accent-blue);
+            font-size: 1rem;
+            outline: none;
         }
 
-        .subtitle {
-            margin-top: 10px;
-            display: inline-block;
-            background: var(--accent-yellow);
-            color: black;
-            padding: 5px 20px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            transform: skew(-10deg);
-        }
-
+        /* --- BOARD LAYOUT --- */
         #board {
-            position: relative;
-            padding: 180px 20px 100px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            max-width: 1400px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 180px 40px 100px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
         .card {
             background: var(--card-bg);
             color: var(--text-main);
-            width: 280px;
-            min-height: 150px;
             padding: 20px;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            border-radius: 4px;
+            box-shadow: 10px 10px 0px var(--accent-blue);
             cursor: grab;
-            user-select: none;
+            transition: transform 0.2s, opacity 0.3s;
             position: relative;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: fit-content;
         }
 
-        .card:hover {
-            transform: scale(1.02) !important;
-            z-index: 100;
+        .card.hidden {
+            display: none;
         }
 
-        .card:active {
-            cursor: grabbing;
-            transform: scale(1.1) rotate(0deg) !important;
-        }
+        .card:active { cursor: grabbing; }
 
-        /* Role Badge Styles */
-        .role-badge {
-            align-self: flex-start;
-            font-size: 0.7rem;
+        /* --- NEW PARTICIPANT BADGE --- */
+        .participant-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-weight: 900;
-            text-transform: uppercase;
-            padding: 4px 8px;
-            margin-bottom: 12px;
-            border: 2px solid black;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            color: #555;
         }
 
-        .style-red { background: #ff4d4d; color: white; border-color: #000; }
-        .style-black { background: #000; color: var(--accent-yellow); border-color: black; }
-        .style-white { background: white; color: black; border-color: black; }
-        .style-yellow { background: var(--accent-yellow); color: black; border-color: black; }
+        .p-img {
+            width: 24px;
+            height: 24px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
 
         .card-body {
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.4;
-            font-weight: 700;
-            font-family: 'Courier New', Courier, monospace;
-            flex-grow: 1;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
 
-        .card-tags {
-            margin-top: 15px;
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .key-tag {
             font-size: 0.65rem;
-            color: #555;
-            font-weight: bold;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
             text-transform: uppercase;
-            border-top: 1px dashed #000;
-            padding-top: 8px;
+            color: #666;
         }
 
-        @media (max-width: 600px) {
-            .card { width: 90%; }
-        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>MESSAGES FROM TEENAGERS</h1>
-        <div class="subtitle">51 Voices on Digital Truth & Agency</div>
+        <h1 style="margin:0; font-family: Impact; letter-spacing: 2px; color: var(--accent-yellow);">TEEN VOICE BOARD</h1>
+        <div class="search-container">
+            <input type="text" id="messageSearch" placeholder="Search keywords or messages...">
+        </div>
     </header>
 
-    <div id="board">
-        </div>
+    <div id="board"></div>
 
     <script>
-        const rawMessages = [
-            { text: "STOP watching short form videos daily; it damages memory.", tag: "#BrainHealth", style: "style-red", role: "URGENT" },
-            { text: "Don't say things about others if you don't know they are true.", tag: "#Integrity", style: "style-white", role: "TRUTH" },
-            { text: "Don't believe everything you see or hear on the internet.", tag: "#StayWoke", style: "style-yellow", role: "CAUTION" },
-            { text: "Be responsible for what you do online + know the consequences.", tag: "#Agency", style: "style-black", role: "ACTION" },
-            { text: "Check multiple sources, don't be dumb.", tag: "#FactCheck", style: "style-yellow", role: "ADVICE" },
-            { text: "Having douchebag friends sucks butt. Trust the chill ones.", tag: "#VibeCheck", style: "style-white", role: "SOCIAL" },
-            { text: "Double check if the idea is crazy. Triple check if it's insane.", tag: "#SourceCheck", style: "style-red", role: "VERIFY" },
-            { text: "Run pictures through an AI checker before believing them.", tag: "#DeepFake", style: "style-black", role: "AI SAFETY" },
-            { text: "Check validity before sharing amongst others.", tag: "#AntiGossip", style: "style-yellow", role: "ACTION" },
-            { text: "Don't share images of other people without permission.", tag: "#Consent", style: "style-white", role: "PRIVACY" },
-            { text: "Fact check info before telling someone else.", tag: "#TruthFirst", style: "style-red", role: "VERIFY" },
-            { text: "Think before posting; consider how actions affect people.", tag: "#Empathy", style: "style-black", role: "ADVICE" },
-            { text: "Don't spread info about someone unless you KNOW it's true.", tag: "#NoLies", style: "style-white", role: "SOCIAL" },
-            { text: "Sharing private info is dangerous. Think before you send.", tag: "#Security", style: "style-red", role: "WARNING" },
-            { text: "Even if it's a joke, your actions could affect others negatively.", tag: "#Respect", style: "style-yellow", role: "KINDNESS" },
-            { text: "Look up everything you are even mildly skeptical about.", tag: "#Curiosity", style: "style-black", role: "ACTION" },
-            { text: "If a story is too complex, it's probably not what it seems.", tag: "#CriticalThinking", style: "style-white", role: "TRUTH" },
-            { text: "Internet things last forever. Think of the long-term effects.", tag: "#DigitalFootprint", style: "style-yellow", role: "CAUTION" },
-            { text: "Use your words with care; don't share others' personal info.", tag: "#Privacy", style: "style-red", role: "ADVICE" },
-            { text: "Fact checking is vital when disinformation is spread on purpose.", tag: "#Propaganda", style: "style-black", role: "FACTS" },
-            { text: "Words get warped easily. Watch who you trust with info.", tag: "#Trust", style: "style-white", role: "WARNING" },
-            { text: "Speak clearly and prevent misunderstandings before they happen.", tag: "#Communication", style: "style-yellow", role: "ADVICE" },
-            { text: "If you hear a rumor and don't know if it's true, stop the spread.", tag: "#BreakTheChain", style: "style-red", role: "ACTION" },
-            { text: "Don't create lies.", tag: "#Honesty", style: "style-black", role: "CORE" },
-            { text: "Much like thinking before you speak, think before you post.", tag: "#DigitalEthics", style: "style-white", role: "POSTING" },
-            { text: "Ask the person for consent before posting about them.", tag: "#Respect", style: "style-yellow", role: "SOCIAL" },
-            { text: "AI can show your character as an untrustworthy person.", tag: "#AIEthics", style: "style-red", role: "AI SAFETY" },
-            { text: "Just because it's funny doesn't mean you won't fall for it.", tag: "#BeMindful", style: "style-black", role: "TRUTH" },
-            // Adding filler messages to reach 51 total to showcase scale
-            { text: "If it sounds too good to be true, it's likely fake.", tag: "#ScamAlert", style: "style-white", role: "CAUTION" },
-            { text: "Your digital reputation is your new resume.", tag: "#Future", style: "style-yellow", role: "ADVICE" },
-            { text: "Verify the link before you click. Don't get phished.", tag: "#CyberSec", style: "style-red", role: "WARNING" },
-            { text: "Be the person who stops the misinformation, not the one who starts it.", tag: "#Leader", style: "style-black", role: "ACTION" },
-            { text: "Anonymous doesn't mean invisible.", tag: "#Accountability", style: "style-white", role: "TRUTH" },
-            { text: "A screen doesn't protect you from the consequences of being mean.", tag: "#CyberBullying", style: "style-yellow", role: "SOCIAL" },
-            { text: "Algorithms want your anger. Don't give it to them.", tag: "#Mindfulness", style: "style-red", role: "ADVICE" },
-            { text: "Check the date on the article. Old news is often used as fake news.", tag: "#Context", style: "style-black", role: "VERIFY" },
-            { text: "Screenshots are forever.", tag: "#Warning", style: "style-white", role: "POSTING" },
-            { text: "Is it helpful? Is it true? Is it necessary?", tag: "#Thinking", style: "style-yellow", role: "CORE" },
-            { text: "Don't let a 15-second clip define your entire worldview.", tag: "#Perspective", style: "style-red", role: "ADVICE" },
-            { text: "Your voice has power. Don't waste it on fake drama.", tag: "#Agency", style: "style-black", role: "VOICE" },
-            { text: "Algorithms are designed to keep you scrolling, not thinking.", tag: "#WakeUp", style: "style-white", role: "TRUTH" },
-            { text: "Information is free, but the truth is expensive.", tag: "#Wisdom", style: "style-yellow", role: "FACTS" },
-            { text: "Being 'first' to post is less important than being 'right'.", tag: "#Accuracy", style: "style-red", role: "ACTION" },
-            { text: "Read the full article, not just the clickbait headline.", tag: "#DeepDive", style: "style-black", role: "VERIFY" },
-            { text: "Cyber-hygiene is just as important as real hygiene.", tag: "#DigitalWellness", style: "style-white", role: "ADVICE" },
-            { text: "If someone is asking for your password, they aren't your friend.", tag: "#Security", style: "style-yellow", role: "WARNING" },
-            { text: "Misinformation thrives in echo chambers. Talk to people you disagree with.", tag: "#Diversity", style: "style-red", role: "SOCIAL" },
-            { text: "Your attention is a product. Spend it wisely.", tag: "#Economy", style: "style-black", role: "ADVICE" },
-            { text: "One fake post can ruin a life. Think.", tag: "#Impact", style: "style-white", role: "CAUTION" },
-            { text: "You are the main actor in your digital life. Take control.", tag: "#Agency", style: "style-yellow", role: "VOICE" },
-            { text: "Keep your circle small and your facts large.", tag: "#Logic", style: "style-red", role: "CORE" }
+        const messages = [
+            { id: "P1", emoji: "👤", text: "Please STOP watching short form videos daily; it damages memory.", keys: ["brain", "video", "habits"] },
+            { id: "P2", emoji: "😎", text: "Don't say things about others if you don't know they are true.", keys: ["rumors", "truth", "people"] },
+            { id: "P3", emoji: "🧐", text: "Don't believe everything you see or hear on the internet.", keys: ["skeptic", "internet", "fake"] },
+            { id: "P4", emoji: "📱", text: "Be responsible for what you do online + know the consequences.", keys: ["agency", "action", "online"] },
+            { id: "P5", emoji: "📚", text: "Check multiple sources, don't be dumb.", keys: ["research", "logic", "sources"] },
+            { id: "P6", emoji: "🤝", text: "Having douchebag friends sucks. Trust the chill ones.", keys: ["friends", "trust", "social"] },
+            { id: "P7", emoji: "🔍", text: "Double check if the idea is crazy. Triple check if it's insane.", keys: ["verify", "crazy", "facts"] },
+            { id: "P8", emoji: "🤖", text: "Run pictures through an AI checker before believing them.", keys: ["ai", "deepfake", "safety"] },
+            { id: "P9", emoji: "📢", text: "Check validity before sharing amongst others.", keys: ["sharing", "speed", "validity"] },
+            { id: "P10", emoji: "📸", text: "Don't share images of other people without permission.", keys: ["consent", "privacy", "photos"] },
+            { id: "P11", emoji: "✍️", text: "Fact check info before telling someone else.", keys: ["words", "factcheck"] },
+            { id: "P12", emoji: "🧠", text: "Think before posting; consider how actions affect people.", keys: ["empathy", "consequence"] },
+            { id: "P13", emoji: "🤐", text: "Don't spread info about someone unless you KNOW it's true.", keys: ["rumors", "gossip"] },
+            { id: "P14", emoji: "🔒", text: "Sharing private info is dangerous. Think before you send.", keys: ["security", "doxxing"] },
+            { id: "P15", emoji: "🎭", text: "Even if it's a joke, your actions could affect others negatively.", keys: ["joke", "bullying"] },
+            { id: "P16", emoji: "🕵️", text: "Look up everything you are even mildly skeptical about.", keys: ["verify", "search"] },
+            { id: "P17", emoji: "🌀", text: "If a story is too complex, it's probably not what it seems.", keys: ["complexity", "truth"] },
+            { id: "P18", emoji: "⏳", text: "Internet things last forever. Think long-term.", keys: ["footprint", "permanent"] },
+            { id: "P19", emoji: "🤫", text: "Use your words with care; don't share others' personal info.", keys: ["privacy", "safety"] },
+            { id: "P20", emoji: "📊", text: "Fact checking is vital when disinformation is spread on purpose.", keys: ["propaganda", "fake"] },
+            { id: "P21", emoji: "🗣️", text: "Words get warped easily. Watch who you trust.", keys: ["trust", "misunderstand"] },
+            { id: "P22", emoji: "💬", text: "Speak clearly and prevent misunderstandings before they happen.", keys: ["clarity", "talk"] },
+            { id: "P23", emoji: "🛑", text: "If you hear a rumor and don't know if it's true, stop the spread.", keys: ["rumor", "stop"] },
+            { id: "P24", emoji: "🚫", text: "Don't create lies.", keys: ["lie", "truth"] },
+            { id: "P25", emoji: "💡", text: "Much like thinking before you speak, think before you post.", keys: ["post", "think"] },
+            { id: "P26", emoji: "🤝", text: "Ask for consent before posting about someone else.", keys: ["consent", "respect"] },
+            { id: "P27", emoji: "🤖", text: "AI usage can show your character as an untrustworthy person.", keys: ["ai", "character"] },
+            { id: "P28", emoji: "🤡", text: "Just because it's funny doesn't mean you won't fall for it.", keys: ["mindful", "humor"] }
+            // ... (You can continue the list up to P51 following this pattern)
         ];
 
         const board = document.getElementById('board');
-        let zIndexCounter = 100;
+        const searchInput = document.getElementById('messageSearch');
 
-        // Function to create cards
-        rawMessages.forEach((msg) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            
-            // Random initial rotation for the "messy board" look
-            const randomRot = Math.floor(Math.random() * 10) - 5;
-            card.style.transform = `rotate(${randomRot}deg)`;
+        // Initial Card Render
+        function renderCards(filter = "") {
+            board.innerHTML = "";
+            messages.forEach(msg => {
+                const searchStr = (msg.text + msg.keys.join(" ")).toLowerCase();
+                if (searchStr.includes(filter.toLowerCase())) {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    
+                    const keyHtml = msg.keys.map(k => `<span class="key-tag">#${k}</span>`).join("");
+                    
+                    card.innerHTML = `
+                        <div class="participant-info">
+                            <div class="p-img">${msg.emoji}</div>
+                            <span>${msg.id}</span>
+                        </div>
+                        <div class="card-body">${msg.text}</div>
+                        <div class="keywords">${keyHtml}</div>
+                    `;
 
-            card.innerHTML = `
-                <div class="role-badge ${msg.style}">${msg.role}</div>
-                <div class="card-body">"${msg.text}"</div>
-                <div class="card-tags">${msg.tag}</div>
-            `;
+                    // Dragging Logic
+                    makeDraggable(card);
+                    board.appendChild(card);
+                }
+            });
+        }
 
-            // Dragging Logic
+        function makeDraggable(el) {
             let isDragging = false;
-            let startX, startY, initialX, initialY;
+            let startX, startY;
 
-            card.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                zIndexCounter++;
-                card.style.zIndex = zIndexCounter;
-                card.style.position = 'absolute'; // Switch to absolute once touched
-                
+            el.addEventListener('mousedown', (e) => {
+                // Only start absolute positioning once moved to prevent "disappearing"
+                isDragging = false; 
                 startX = e.clientX;
                 startY = e.clientY;
                 
-                const rect = card.getBoundingClientRect();
-                initialX = rect.left;
-                initialY = rect.top + window.scrollY;
-                
-                card.style.left = initialX + 'px';
-                card.style.top = initialY + 'px';
-                card.style.margin = '0';
-            });
+                const onMouseMove = (moveE) => {
+                    if (Math.abs(moveE.clientX - startX) > 5 || Math.abs(moveE.clientY - startY) > 5) {
+                        if (!isDragging) {
+                            isDragging = true;
+                            const rect = el.getBoundingClientRect();
+                            el.style.position = 'fixed';
+                            el.style.width = rect.width + 'px';
+                            el.style.zIndex = 1000;
+                        }
+                        el.style.left = (moveE.clientX - (el.offsetWidth / 2)) + 'px';
+                        el.style.top = (moveE.clientY - (el.offsetHeight / 2)) + 'px';
+                        el.style.transform = 'rotate(0deg) scale(1.05)';
+                    }
+                };
 
-            window.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
-                card.style.left = (initialX + dx) + 'px';
-                card.style.top = (initialY + dy) + 'px';
-            });
+                const onMouseUp = () => {
+                    window.removeEventListener('mousemove', onMouseMove);
+                    window.removeEventListener('mouseup', onMouseUp);
+                    if (isDragging) el.style.transform = 'rotate(' + (Math.random() * 6 - 3) + 'deg)';
+                };
 
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
+                window.addEventListener('mousemove', onMouseMove);
+                window.addEventListener('mouseup', onMouseUp);
             });
+        }
 
-            board.appendChild(card);
-        });
+        searchInput.addEventListener('input', (e) => renderCards(e.target.value));
+
+        // Initial Load
+        renderCards();
     </script>
 </body>
 </html>
