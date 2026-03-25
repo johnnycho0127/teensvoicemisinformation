@@ -23,7 +23,6 @@
             background-size: 25px 25px;
         }
 
-        /* --- HEADER & TITLES --- */
         header {
             position: fixed;
             top: 0;
@@ -36,22 +35,22 @@
             text-align: center;
         }
 
-        .main-title {
-            margin: 0;
-            font-family: 'Impact', sans-serif;
-            font-size: 3rem;
-            letter-spacing: 2px;
-            color: white;
-            text-transform: uppercase;
-        }
-
         .sub-title {
             color: var(--accent-yellow);
             font-weight: 800;
             font-size: 1.1rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            margin: 0;
+            font-family: 'Impact', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase;
         }
 
         .search-wrapper {
@@ -70,31 +69,28 @@
             border-bottom: 3px solid var(--accent-yellow);
         }
 
-        /* --- THE BOARD --- */
         #board {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 25px;
-            padding: 320px 50px 100px;
+            padding: 340px 50px 100px;
             max-width: 1600px;
             margin: 0 auto;
         }
 
-        /* --- CARD STYLE --- */
         .card {
             background: var(--card-bg);
             color: var(--text-main);
             padding: 30px;
             border-radius: 2px;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
-            position: relative;
             display: flex;
             flex-direction: column;
             box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.1);
         }
 
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-10px);
             box-shadow: 12px 12px 0px var(--accent-blue);
             z-index: 10;
         }
@@ -108,7 +104,6 @@
 
         .p-avatar {
             font-size: 1.8rem;
-            filter: grayscale(0.2);
         }
 
         .p-id {
@@ -124,28 +119,12 @@
             font-size: 1.05rem;
             font-weight: 600;
             line-height: 1.5;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             flex-grow: 1;
         }
 
-        .keyword-pill-box {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            padding-top: 15px;
-            border-top: 1px solid #ddd;
-        }
-
-        .keyword-pill {
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
         @media (max-width: 600px) {
-            #board { padding-top: 380px; padding-left: 20px; padding-right: 20px; }
-            .main-title { font-size: 1.8rem; }
+            #board { padding-top: 400px; padding-left: 20px; padding-right: 20px; }
         }
     </style>
 </head>
@@ -155,80 +134,95 @@
         <div class="sub-title">Agency & Awareness</div>
         <h1 class="main-title">TEENS VS MISINFORMATION</h1>
         <div class="search-wrapper">
-            <input type="text" id="messageSearch" placeholder="SEARCH KEYWORDS OR VOICES...">
+            <input type="text" id="messageSearch" placeholder="SEARCH MESSAGES OR VOICES...">
         </div>
     </header>
 
     <div id="board"></div>
 
     <script>
-        // Consistent People Emojis
-        const peopleEmojis = ["🙋‍♂️", "🙋‍♀️", "💁‍♂️", "💁‍♀️", "👨‍💻", "👩‍💻", "🧑‍🎓", "👩‍🎓", "🧑‍🏫", "🧔", "🧒", "🧑‍🦱", "👩‍🦱"];
+        const peopleEmojis = ["🙋‍♂️", "🙋‍♀️", "💁‍♂️", "💁‍♀️", "👨‍💻", "👩‍💻", "🧑‍🎓", "👩‍🎓", "🧑‍🏫", "🧔", "🧑‍🦱", "👩‍🦱"];
 
-        const messages = [
-            { id: "P1", text: "Please STOP watching short form videos daily; it damages memory and recognition.", keys: ["#brain", "#habits"] },
-            { id: "P2", text: "Don't say things about other people if you don't know if it's true.", keys: ["#rumors", "#integrity"] },
-            { id: "P3", text: "Don't believe everything you see or hear on the internet.", keys: ["#skepticism", "#fake"] },
-            { id: "P4", text: "Be responsible for what you do online and know the consequences.", keys: ["#agency", "#accountability"] },
-            { id: "P5", text: "Check multiple sources, don't be dumb.", keys: ["#research", "#logic"] },
-            { id: "P6", text: "Make sure you can trust your friends. Having bad friends sucks.", keys: ["#social", "#trust"] },
-            { id: "P7", text: "Double check if the idea is crazy. Triple check if it's insane.", keys: ["#verify", "#criticalthinking"] },
-            { id: "P8", text: "Run all pictures through an AI checker before believing them.", keys: ["#ai", "#deepfake"] },
-            { id: "P9", text: "Check validity of stuff you hear before sharing it amongst others.", keys: ["#sharing", "#validity"] },
-            { id: "P10", text: "Think about impacts and don't share images without permission.", keys: ["#consent", "#privacy"] },
-            { id: "P11", text: "Fact check info and make sure it's true before telling someone.", keys: ["#factcheck", "#truth"] },
-            { id: "P12", text: "Think before posting and consider how actions affect others.", keys: ["#empathy", "#influence"] },
-            { id: "P13", text: "Don't spread information about someone unless you know it's true.", keys: ["#gossip", "#safety"] },
-            { id: "P14", text: "Sharing private information can be dangerous. Think before sending.", keys: ["#security", "#doxxing"] },
-            { id: "P15", text: "Even if it was meant as a joke, your actions could affect others.", keys: ["#respect", "#jokes"] },
-            { id: "P16", text: "Be sure to look up everything you are even mildly skeptical about.", keys: ["#verify", "#search"] },
-            { id: "P17", text: "If a story is complex, it isn't what it seems. Dig deeper.", keys: ["#complexity", "#truth"] },
-            { id: "P18", text: "Internet things last way longer than you realize. Think first.", keys: ["#footprint", "#forever"] },
-            { id: "P19", text: "Use words with care and don't share others' personal info.", keys: ["#privacy", "#boundaries"] },
-            { id: "P20", text: "Fact checking is vital when disinformation is spread on purpose.", keys: ["#propaganda", "#truth"] },
-            { id: "P21", text: "Words get mixed up and warped easily. Choose trust carefully.", keys: ["#clarity", "#misunderstanding"] },
-            { id: "P22", text: "Speak clearly and think of misunderstandings before they happen.", keys: ["#communication"] },
-            { id: "P23", text: "If you hear a rumor and don't know if it's true, don't spread it.", keys: ["#rumors", "#stop"] },
-            { id: "P24", text: "Don't create lies.", keys: ["#honesty", "#truth"] },
-            { id: "P25", text: "Much like thinking before you speak, think before you post.", keys: ["#think", "#digitalethics"] },
-            { id: "P26", text: "Talk to the person you're posting about for consent first.", keys: ["#consent", "#respect"] },
-            { id: "P27", text: "Don't get wrapped up in 'fun' AI; it can show you as untrustworthy.", keys: ["#ai", "#character"] },
-            { id: "P28", text: "Just cause it's funny doesn't mean you won't fall for it.", keys: ["#mindful", "#humor"] }
-            // Pattern continues to P51
+        const rawMessages = [
+            "Please STOP watching short form videos on the daily, it can greatly damage memory and recognition.",
+            "Don't say things about other people if you don't know if it's true",
+            "Don't believe everything you see/hear on the internet",
+            "Be responsible for what you do on the internet + know the consequences of your actions",
+            "Check multiple sources, don't be dumb",
+            "Make sure you can trust your friends and that you are all chill with each other. Having douchebag friends sucks butt.",
+            "Check the source. Double check if the idea is crazy. Triple check if it's actually insane. Maybe even a quadruple check if yes?",
+            "Run all pictures and videos through an AI checker before believing it's real or positng about it",
+            "Check validity of stuff you hear or see before sharing it amongst others",
+            "Think about the impacts your actions have on the people around you and don't share images of other people without permission",
+            "Fact check information and make sure it's actually true before telling someone else",
+            "I would tell them to not trust everything they see. I would tell them to think before posting and consider how their actions might affect other people.",
+            "Don't spread information about someone online unless you know it's true.",
+            "Sharing private information can be dangerous so you should think before you send.",
+            "Think about your actions, even if it was meant as a joke your actions could affect others negatively",
+            "Be sure to look up everything you are even mildly skeptical about",
+            "It doesn't matter what story of thing is online, it matters that if it's complex, then the story isn't what it is.",
+            "Things on the intenret can last way longer and have way bigger effects than you realize. Before you post something, you should think about the effects it'll have on other people.",
+            "Use your words with care and don't share others' personal info without consent or at all. It's not your information to share",
+            "I think fact checking is very imporatnt in this day and age with disinformation spread on purpose.",
+            "Words often get mixed up and warped easily so be careful who you choose to trust with harmful info.",
+            "Speak clearly and think of misunderstandings before they come about.",
+            "If you hear a rumor and you don't know if it's true or not, don't spread it further.",
+            "Don't create lies",
+            "Much like thinking before you speak, think before you post. Your actions have big consequences and once it's online it's there forever.",
+            "Make sure that you are talking to the person that you are making misinformation about for consent or do research first",
+            "Don't get wrapped up in the \"fun\" of things like AI, because they can have consequences and it can show your character as an untrustworthy person.",
+            "Just cause its funny and obvious to you does not mean you will not fall for it, be mindful",
+            "Think about everyone before you post. People have different reactions and boundaries",
+            "Doubt information before you get concrete evidence (Something more than a single picture or one person's view)",
+            "Always question things that you aren't 100% certain on.",
+            "Always don't trust the info unless you know them in person or know for sure that they are trustworthy through other people.",
+            "Don't be dumb",
+            "Think about it. Is it true/false. Is it safe/harmful. Is it helpful/worse. Is it right/wrong. Is it good/bad.",
+            "If you produced some misinformation unintentionally, just keep it for yourself, don't share or show it to anyone else.",
+            "Even if you think you are right, and you trust the other, always keep things to yourself. Sharing opinions will always face someone who opposes to it. If you keep it to yourself no conflict will occur. So, keep it to yourself.",
+            "Do not share information if you know that it's not true.",
+            "Don't hangout with people who make you a victim and don't spread rumors you don't know is true",
+            "Only spread the info if you know for 100% that it's true",
+            "Never make a assumption if you saw real situation",
+            "Don't spread rumors before knowing if the information or story are true and confirmed. (Anna would do this)",
+            "I would not gossip.",
+            "To the middle schoolers—don't trust everything that people say, misinformation can be formed from the wrong motivations.",
+            "Don't trust everything online! Check out a reliable source you can find.",
+            "Validate your sources/have a bit of doubt on others' words",
+            "AI is NOT your friend",
+            "Don't believe everything you see online and ask trusted adults if you are unsure.",
+            "One piece of advice I'd give is to not trust everything blindly. Always verify your information before spreading it.",
+            "If you see misinformation, make sure not to send it to friends without telling them it's false. Always ensure people are aware of the truthfulness of information",
+            "Research before you share anything and post/repost responsibly about news, especially political or social issues!! Try to fact check by looking at comments and Google.",
+            "Don't let your emotions control you because that'll lead to faster spread of misinfo and you'll probably make it worse",
+            "Be careful who you share things to also you should check the victim beforehand.",
+            "Misinformation can spiral and share very quickly since it is usually shocking. Be careful when you are sharing sketchy posts with people.",
+            "Think & Analyze for a little before sharing or believing.",
+            "Misinformation can be harmful to everyone invalued & it can spread very quickly. You shouldn’t create it or spread it as once you do, you can’t undo it.",
+            "Reflect on emotions and acknowledge what I feel so I know what/how to act like.",
+            "Think before you act",
+            "Check info before spreading it around",
+            "Be sure to think of others too, rather than just yourself."
         ];
-
-        // Fill remaining P29-P51 to ensure 51 messages
-        for(let i=29; i<=51; i++) {
-            messages.push({
-                id: "P" + i,
-                text: "We are the main actors in this digital world. Accuracy is our responsibility.",
-                keys: ["#agency", "#voice"]
-            });
-        }
 
         const board = document.getElementById('board');
         const searchInput = document.getElementById('messageSearch');
 
         function render(filter = "") {
             board.innerHTML = "";
-            messages.forEach((m, index) => {
-                const searchStr = (m.text + m.keys.join(" ")).toLowerCase();
-                if (searchStr.includes(filter.toLowerCase())) {
+            rawMessages.forEach((text, index) => {
+                if (text.toLowerCase().includes(filter.toLowerCase())) {
                     const card = document.createElement('div');
                     card.className = 'card';
-                    
-                    // Assign a consistent emoji based on index
                     const emoji = peopleEmojis[index % peopleEmojis.length];
+                    const participantId = "P" + (index + 1);
 
                     card.innerHTML = `
                         <div class="participant-meta">
                             <span class="p-avatar">${emoji}</span>
-                            <span class="p-id">${m.id}</span>
+                            <span class="p-id">${participantId}</span>
                         </div>
-                        <div class="card-content">"${m.text}"</div>
-                        <div class="keyword-pill-box">
-                            ${m.keys.map(k => `<span class="keyword-pill">${k}</span>`).join("")}
-                        </div>
+                        <div class="card-content">"${text}"</div>
                     `;
                     board.appendChild(card);
                 }
